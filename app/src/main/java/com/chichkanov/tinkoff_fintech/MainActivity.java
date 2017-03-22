@@ -1,5 +1,6 @@
 package com.chichkanov.tinkoff_fintech;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(int position) {
                 Toast.makeText(MainActivity.this, String.valueOf(position), Toast.LENGTH_SHORT).show();
+                startConversationScreen();
             }
         });
         recyclerView.setAdapter(adapter);
@@ -39,14 +41,19 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.addItemDecoration(dividerItemDecoration);
     }
 
-    private List<DialogItem> createDataset() {
-        List<DialogItem> list = new ArrayList<>();
-        list.add(new DialogItem("title", "desc"));
-        list.add(new DialogItem("title", "desc"));
-        list.add(new DialogItem("title", "desc"));
-        list.add(new DialogItem("title", "desc"));
-        list.add(new DialogItem("title", "desc"));
-        list.add(new DialogItem("title", "desc"));
+    private List<DialogsItem> createDataset() {
+        List<DialogsItem> list = new ArrayList<>();
+        list.add(new DialogsItem("title", "desc"));
+        list.add(new DialogsItem("title", "desc"));
+        list.add(new DialogsItem("title", "desc"));
+        list.add(new DialogsItem("title", "desc"));
+        list.add(new DialogsItem("title", "desc"));
+        list.add(new DialogsItem("title", "desc"));
         return list;
+    }
+
+    private void startConversationScreen(){
+        Intent intent = new Intent(this, ConversationActivity.class);
+        startActivity(intent);
     }
 }

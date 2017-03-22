@@ -40,5 +40,6 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("LOGIN", login.getText().toString());
         startActivity(intent);
+        finish();
     }
 }

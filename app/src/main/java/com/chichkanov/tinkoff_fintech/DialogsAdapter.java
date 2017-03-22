@@ -14,10 +14,10 @@ import java.util.List;
 
 public class DialogsAdapter extends RecyclerView.Adapter<DialogsAdapter.ViewHolder> {
 
-    private List<DialogItem> dataset;
+    private List<DialogsItem> dataset;
     private OnItemClickListener clickListener;
 
-    public DialogsAdapter(List<DialogItem> dataset, OnItemClickListener clickListener) {
+    public DialogsAdapter(List<DialogsItem> dataset, OnItemClickListener clickListener) {
         this.dataset = dataset;
         this.clickListener = clickListener;
     }
