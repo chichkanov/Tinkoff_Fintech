@@ -14,6 +14,9 @@ import java.util.List;
 
 public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private static final int MESSAGE_YOU = 0;
+    private static final int MESSAGE_MATE = 1;
+
     private List<ConversationItem> dataset;
 
     public ConversationAdapter(List<ConversationItem> dataset) {
@@ -24,10 +27,10 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
         switch (viewType){
-            case ConversationItem.MESSAGE_YOU :
+            case MESSAGE_YOU :
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_conversation_you, parent, false);
                 return new YourMessageViewHolder(view);
-            case ConversationItem.MESSAGE_MATE :
+            case MESSAGE_MATE :
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_conversation_mate, parent, false);
                 return new MateMessageViewHolder(view);
         }
@@ -39,11 +42,11 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         ConversationItem object = dataset.get(position);
         if(object != null){
             switch (object.getType()){
-                case ConversationItem.MESSAGE_MATE :
-                    ((MateMessageViewHolder)holder).message.setText(object.getMateMessage());
+                case MESSAGE_MATE :
+                    ((MateMessageViewHolder)holder).message.setText(object.getMessage());
                     break;
-                case ConversationItem.MESSAGE_YOU:
-                    ((YourMessageViewHolder)holder).message.setText(object.getYourMessage());
+                case MESSAGE_YOU:
+                    ((YourMessageViewHolder)holder).message.setText(object.getMessage());
                     break;
             }
         }
@@ -59,6 +62,11 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         ConversationItem object = dataset.get(position);
         if(object != null) return object.getType();
         return 0;
+    }
+
+    public void addItem(String message, int type){
+        dataset.add(new ConversationItem(message, type));
+        this.notifyItemInserted(dataset.size() - 1);
     }
 
     public static class YourMessageViewHolder extends RecyclerView.ViewHolder{

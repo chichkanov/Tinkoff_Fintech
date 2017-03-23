@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     android:layout_gravity="left"
     android:orientation="vertical"
-    android:padding="5dp">
+    android:paddingBottom="7dp"
+    android:paddingLeft="10dp">
 <TextView
         android:id="@+id/tv_conversation_mate"
         android:layout_width="wrap_content"
@@ -13,6 +14,6 @@
         android:layout_marginRight="100dp"
         android:background="@drawable/item_conversation_background_mate"
         android:layout_gravity="left"
-        android:textSize="18sp"
+        android:textSize="16sp"
         tools:text="ВЫФВЫФВФЫВФЫВЫФВЫФВЫФВЫФВЫФВЫФВЫФВЫФВФЫВ" />
 </LinearLayout>

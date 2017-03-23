@@ -43,12 +43,20 @@ public class MainActivity extends AppCompatActivity {
 
     private List<DialogsItem> createDataset() {
         List<DialogsItem> list = new ArrayList<>();
-        list.add(new DialogsItem("title", "desc"));
-        list.add(new DialogsItem("title", "desc"));
-        list.add(new DialogsItem("title", "desc"));
-        list.add(new DialogsItem("title", "desc"));
-        list.add(new DialogsItem("title", "desc"));
-        list.add(new DialogsItem("title", "desc"));
+        list.add(new DialogsItem("Мама", "Тут последнее сообщение"));
+        list.add(new DialogsItem("Папа", "Тут последнее сообщение"));
+        list.add(new DialogsItem("RandomGuy", "Тут последнее сообщение"));
+        list.add(new DialogsItem("RandomGuy", "Тут последнее сообщение"));
+        list.add(new DialogsItem("RandomGuy", "Тут последнее сообщение"));
+        list.add(new DialogsItem("RandomGuy", "Тут последнее сообщение"));
+        list.add(new DialogsItem("RandomGuy", "Тут последнее сообщение"));
+        list.add(new DialogsItem("RandomGuy", "Тут последнее сообщение"));
+        list.add(new DialogsItem("RandomGuy", "Тут последнее сообщение"));
+        list.add(new DialogsItem("RandomGuy", "Тут последнее сообщение"));
+        list.add(new DialogsItem("RandomGuy", "Тут последнее сообщение"));
+        list.add(new DialogsItem("RandomGuy", "Тут последнее сообщение"));
+        list.add(new DialogsItem("RandomGuy", "Тут последнее сообщение"));
+        list.add(new DialogsItem("RandomGuy", "Тут последнее сообщение"));
         return list;
     }
 

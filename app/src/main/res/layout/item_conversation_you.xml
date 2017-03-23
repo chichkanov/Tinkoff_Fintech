@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     android:layout_gravity="right"
     android:orientation="vertical"
-    android:padding="5dp">
+    android:paddingBottom="7dp"
+    android:paddingRight="10dp">
     <TextView
         android:id="@+id/tv_conversation_you"
         android:layout_width="wrap_content"
@@ -14,6 +15,6 @@
         android:textColor="#FFFFFF"
         android:background="@drawable/item_conversation_background_you"
         android:layout_gravity="right"
-        android:textSize="18sp"
+        android:textSize="16sp"
         tools:text="Тут сообщение" />
 </LinearLayout>

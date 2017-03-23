@@ -1,8 +1,7 @@
 <resources>
-    <string name="app_name">Tinkoff_Fintech</string>
+    <string name="app_name">Best messenger</string>
     <string name="login">Логин</string>
     <string name="password">Пароль</string>
     <string name="enter">Войти</string>
     <string name="enter_message">Введите сообщение</string>
-
 </resources>

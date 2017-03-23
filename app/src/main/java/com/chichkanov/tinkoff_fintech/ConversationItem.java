@@ -6,25 +6,16 @@ package com.chichkanov.tinkoff_fintech;
 
 public class ConversationItem {
 
-    public static final int MESSAGE_YOU = 0;
-    public static final int MESSAGE_MATE = 1;
-
     private int type;
-    private String yourMessage;
-    private String mateMessage;
+    private String message;
 
-    public ConversationItem(String yourMessage, String mateMessage, int type) {
-        this.yourMessage = yourMessage;
-        this.mateMessage = mateMessage;
+    public ConversationItem(String message, int type) {
+        this.message = message;
         this.type = type;
     }
 
-    public String getYourMessage() {
-        return yourMessage;
-    }
-
-    public String getMateMessage() {
-        return mateMessage;
+    public String getMessage() {
+        return message;
     }
 
     public int getType() {
