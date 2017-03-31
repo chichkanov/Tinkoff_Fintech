@@ -44,9 +44,11 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             switch (object.getType()){
                 case MESSAGE_MATE :
                     ((MateMessageViewHolder)holder).message.setText(object.getMessage());
+                    ((MateMessageViewHolder)holder).date.setText(object.getDate());
                     break;
                 case MESSAGE_YOU:
                     ((YourMessageViewHolder)holder).message.setText(object.getMessage());
+                    ((YourMessageViewHolder)holder).date.setText(object.getDate());
                     break;
             }
         }
@@ -72,20 +74,24 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public static class YourMessageViewHolder extends RecyclerView.ViewHolder{
 
         public TextView message;
+        public TextView date;
 
         public YourMessageViewHolder(View itemView) {
             super(itemView);
             message = (TextView) itemView.findViewById(R.id.tv_conversation_you);
+            date = (TextView) itemView.findViewById(R.id.tv_conversation_you_date);
         }
     }
 
     public static class MateMessageViewHolder extends RecyclerView.ViewHolder{
 
         public TextView message;
+        public TextView date;
 
         public MateMessageViewHolder(View itemView) {
             super(itemView);
             message = (TextView) itemView.findViewById(R.id.tv_conversation_mate);
+            date = (TextView) itemView.findViewById(R.id.tv_conversation_mate_date);
         }
     }
 }

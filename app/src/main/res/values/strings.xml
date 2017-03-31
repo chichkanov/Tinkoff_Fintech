@@ -1,7 +1,14 @@
 <resources>
-    <string name="app_name">Best messenger</string>
+    <string name="app_name">BestMessenger</string>
     <string name="login">Логин</string>
     <string name="password">Пароль</string>
     <string name="enter">Войти</string>
     <string name="enter_message">Введите сообщение</string>
+    <string name="menu_dialogs">Диалоги</string>
+    <string name="menu_settings">Настройки</string>
+    <string name="menu_about">О приложении</string>
+    <string name="menu_exit">Выход</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

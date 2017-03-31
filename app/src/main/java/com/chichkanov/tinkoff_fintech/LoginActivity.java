@@ -2,13 +2,11 @@ package com.chichkanov.tinkoff_fintech;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 /**
  * Created by chichkanov on 20.03.17.
@@ -31,14 +29,19 @@ public class LoginActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startNextScreen();
+                if(login.length() > 0 && password.length() > 0){
+                    startNextScreen();
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "Введите правильные данные!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
 
     private void startNextScreen() {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("LOGIN", login.getText().toString());
+        Intent intent = new Intent(this, NavigationActivity.class);
+        intent.putExtra("login", login.getText().toString());
         startActivity(intent);
         finish();
     }

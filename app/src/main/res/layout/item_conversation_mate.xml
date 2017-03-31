@@ -7,13 +7,25 @@
     android:orientation="vertical"
     android:paddingBottom="7dp"
     android:paddingLeft="10dp">
-<TextView
+
+    <TextView
         android:id="@+id/tv_conversation_mate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="left"
         android:layout_marginRight="100dp"
         android:background="@drawable/item_conversation_background_mate"
-        android:layout_gravity="left"
         android:textSize="16sp"
         tools:text="ВЫФВЫФВФЫВФЫВЫФВЫФВЫФВЫФВЫФВЫФВЫФВЫФВФЫВ" />
+
+    <TextView
+        android:id="@+id/tv_conversation_mate_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:paddingLeft="5dp"
+        android:paddingTop="3dp"
+        android:textColor="#616161"
+        android:textSize="10sp"
+        tools:text="16-47" />
 </LinearLayout>
