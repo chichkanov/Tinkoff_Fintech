@@ -1,9 +1,5 @@
 package com.chichkanov.tinkoff_fintech;
 
-/**
- * Created by chichkanov on 21.03.17.
- */
-
 public class ConversationItem {
 
     private int type;

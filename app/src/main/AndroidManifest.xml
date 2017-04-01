@@ -21,7 +21,6 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity android:name=".ConversationActivity" />
-        <activity android:name=".AboutAppFragment"></activity>
     </application>
 
 </manifest>

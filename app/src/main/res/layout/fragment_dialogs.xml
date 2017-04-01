@@ -2,9 +2,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context="com.chichkanov.tinkoff_fintech.NavigationActivity">
 
-    <android.support.v7.widget.RecyclerView
+<android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_dialogs"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

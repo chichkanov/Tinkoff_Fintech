@@ -8,10 +8,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-/**
- * Created by chichkanov on 21.03.17.
- */
-
 public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int MESSAGE_YOU = 0;

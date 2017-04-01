@@ -8,10 +8,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-/**
- * Created by chichkanov on 20.03.17.
- */
-
 public class LoginActivity extends AppCompatActivity {
     private EditText login;
     private EditText password;

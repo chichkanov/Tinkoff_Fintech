@@ -1,6 +1,5 @@
 package com.chichkanov.tinkoff_fintech;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,9 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-/**
- * Created by chichkanov on 28.03.17.
- */
 
 public class NavigationActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -68,7 +64,8 @@ public class NavigationActivity extends AppCompatActivity implements NavigationV
                 addFragment(dialogsFragment);
                 break;
             case R.id.nav_settings:
-
+                SettingsFragment settingsFragment = SettingsFragment.newInstance("Настройки");
+                addFragment(settingsFragment);
                 break;
             case R.id.nav_about:
                 AboutAppFragment aboutAppFragment = AboutAppFragment.newInstance("О приложении");

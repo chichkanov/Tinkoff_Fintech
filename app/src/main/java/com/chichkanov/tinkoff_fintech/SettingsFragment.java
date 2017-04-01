@@ -1,20 +1,17 @@
 package com.chichkanov.tinkoff_fintech;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.support.v7.preference.PreferenceFragmentCompat;
 
-public class SettingsFragment extends PreferenceFragment {
+public class SettingsFragment extends PreferenceFragmentCompat {
 
-    public static SettingsFragment newInstance(String param1, String param2) {
+    private static final String ARG_TITLE = "Настройки";
+    private String title;
+
+    public static SettingsFragment newInstance(String title) {
         SettingsFragment fragment = new SettingsFragment();
         Bundle args = new Bundle();
-
+        args.putString(ARG_TITLE, title);
         fragment.setArguments(args);
         return fragment;
     }
@@ -22,11 +19,20 @@ public class SettingsFragment extends PreferenceFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            title = getArguments().getString(ARG_TITLE);
+        }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_settings, container, false);
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        getActivity().setTitle(title);
     }
+
+    @Override
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+        addPreferencesFromResource(R.xml.settings);
+    }
+
 }

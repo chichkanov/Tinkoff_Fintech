@@ -27,3 +27,5 @@
 ## Square Picasso specific rules ##
 ## https://square.github.io/picasso/ ##
 -dontwarn com.squareup.okhttp.**
+-keep public class android.support.v7.preference.Preference { *; }
+-keep public class * extends android.support.v7.preference.Preference { *; }
