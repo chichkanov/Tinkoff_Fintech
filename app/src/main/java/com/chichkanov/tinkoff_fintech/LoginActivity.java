@@ -38,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     private void startNextScreen() {
         Intent intent = new Intent(this, NavigationActivity.class);
         intent.putExtra("login", login.getText().toString());
+
         startActivity(intent);
         finish();
     }
