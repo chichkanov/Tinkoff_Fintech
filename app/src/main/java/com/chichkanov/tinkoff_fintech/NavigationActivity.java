@@ -71,9 +71,6 @@ public class NavigationActivity extends AppCompatActivity implements NavigationV
                 AboutAppFragment aboutAppFragment = AboutAppFragment.newInstance("О приложении");
                 addFragment(aboutAppFragment);
                 break;
-            case R.id.nav_exit:
-                finish();
-                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
