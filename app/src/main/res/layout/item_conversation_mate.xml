@@ -12,9 +12,11 @@
         android:id="@+id/tv_conversation_mate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="left"
+        android:layout_gravity="start"
         android:layout_marginRight="100dp"
         android:background="@drawable/item_conversation_background_mate"
+        android:gravity="center_vertical"
+        android:textColor="#424242"
         android:textSize="16sp"
         tools:text="ВЫФВЫФВФЫВФЫВЫФВЫФВЫФВЫФВЫФВЫФВЫФВЫФВФЫВ" />
 
@@ -22,7 +24,7 @@
         android:id="@+id/tv_conversation_mate_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="left"
+        android:layout_gravity="start"
         android:paddingLeft="5dp"
         android:paddingTop="3dp"
         android:textColor="#616161"

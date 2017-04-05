@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -37,6 +38,7 @@ public class DialogsAdapter extends RecyclerView.Adapter<DialogsAdapter.ViewHold
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
+        public ImageView imageView;
         public TextView title;
         public TextView desc;
 
@@ -44,6 +46,7 @@ public class DialogsAdapter extends RecyclerView.Adapter<DialogsAdapter.ViewHold
             super(view);
             title = (TextView) view.findViewById(R.id.tv_dialog_title);
             desc = (TextView) view.findViewById(R.id.tv_dialog_desc);
+            imageView = (ImageView) view.findViewById(R.id.iv_dialog_photo);
             setListener(listener);
         }
 
