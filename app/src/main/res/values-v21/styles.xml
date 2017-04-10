@@ -17,5 +17,10 @@
         <item name="colorButtonNormal">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/white</item>
         <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="android:dialogTheme">@style/CustomDialog</item>
+    </style>
+
+    <style name="CustomDialog" parent="@style/Theme.AppCompat.Light.Dialog">
+        <item name="android:windowNoTitle">false</item>
     </style>
 </resources>
