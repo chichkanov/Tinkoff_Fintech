@@ -13,13 +13,13 @@ public class LoginTask extends AsyncTask<String[], Void, Boolean> {
 
     private WeakReference<LoginFragment> loginFragment;
 
-    public LoginTask(LoginFragment loginFragment){
+    public LoginTask(LoginFragment loginFragment) {
         this.loginFragment = new WeakReference<>(loginFragment);
     }
 
     @Override
     protected Boolean doInBackground(String[]... params) {
-        try{
+        try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();

@@ -6,4 +6,6 @@
     <color name="white">#FFFFFF</color>
     <color name="iron">#E0E0E0</color>
     <color name="primary_darker">#CC1D1D</color>
+    <color name="grey">#e6e6e6</color>
+    <color name="greyer">#eaeaea</color>
 </resources>

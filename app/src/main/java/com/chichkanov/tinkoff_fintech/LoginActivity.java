@@ -34,28 +34,25 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.Lo
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(login.length() > 0 && password.length() > 0){
+                if (login.length() > 0 && password.length() > 0) {
                     new LoginActivity.LoadingDialogFragment().show(getSupportFragmentManager(), LoadingDialogFragment.TAG);
                     new LoginTask(loginFragment).execute();
-                }
-                else{
+                } else {
                     Toast.makeText(getApplicationContext(), "Введите правильные данные!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-        if(savedInstanceState != null){
+        if (savedInstanceState != null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
             loginFragment = (LoginFragment) fragmentManager.findFragmentByTag(LoginFragment.TAG);
-            if(loginFragment != null){
+            if (loginFragment != null) {
 
-            }
-            else{
+            } else {
                 loginFragment = new LoginFragment();
                 fragmentManager.beginTransaction().add(loginFragment, LoginFragment.TAG).commit();
             }
-        }
-        else{
+        } else {
             loginFragment = new LoginFragment();
             getSupportFragmentManager().beginTransaction().add(loginFragment, LoginFragment.TAG).commit();
         }
@@ -71,11 +68,10 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.Lo
 
     @Override
     public void onResult(Boolean success) {
-        ((LoadingDialogFragment)getSupportFragmentManager().findFragmentByTag(LoadingDialogFragment.TAG)).dismiss();
-        if(success){
+        ((LoadingDialogFragment) getSupportFragmentManager().findFragmentByTag(LoadingDialogFragment.TAG)).dismiss();
+        if (success) {
             startNextScreen();
-        }
-        else{
+        } else {
             new LoginActivity.ErrorDialogFragment().show(getSupportFragmentManager(), null);
         }
     }
