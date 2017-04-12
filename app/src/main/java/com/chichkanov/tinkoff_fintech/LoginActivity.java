@@ -68,7 +68,7 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.Lo
 
     @Override
     public void onResult(Boolean success) {
-        ((LoadingDialogFragment) getSupportFragmentManager().findFragmentByTag(LoadingDialogFragment.TAG)).dismiss();
+        ((LoadingDialogFragment) getSupportFragmentManager().findFragmentByTag(LoadingDialogFragment.TAG)).dismissAllowingStateLoss();
         if (success) {
             startNextScreen();
         } else {
@@ -105,6 +105,7 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.Lo
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             Dialog dialog = super.onCreateDialog(savedInstanceState);
             dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+            setCancelable(false);
             return dialog;
         }
     }
