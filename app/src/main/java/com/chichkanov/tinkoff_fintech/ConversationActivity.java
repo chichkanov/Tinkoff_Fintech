@@ -31,6 +31,7 @@ public class ConversationActivity extends AppCompatActivity implements LoaderMan
     private EditText sendMessageEditText;
     private Toolbar toolbar;
     private MessageLoader messageLoader;
+    private String userName;
 
     DateFormat dateFormat = new SimpleDateFormat("HH:mm");
     Date date = new Date();
@@ -40,9 +41,9 @@ public class ConversationActivity extends AppCompatActivity implements LoaderMan
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conversation);
 
-        String data = getIntent().getExtras().getString("username", "Anonymous");
+        userName = getIntent().getExtras().getString("username", "Anonymous");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(data);
+        getSupportActionBar().setTitle(userName);
 
         sendMessageButton = (ImageButton) findViewById(R.id.button_send_message);
         sendMessageEditText = (EditText) findViewById(R.id.edit_text_send_message);
@@ -58,7 +59,7 @@ public class ConversationActivity extends AppCompatActivity implements LoaderMan
             }
         });
         initRecyclerView();
-        messageLoader = new MessageLoader(this);
+        messageLoader = new MessageLoader(this, userName);
         getSupportLoaderManager().initLoader(MESSAGE_LOADER_ID, null, this);
     }
 
@@ -68,12 +69,11 @@ public class ConversationActivity extends AppCompatActivity implements LoaderMan
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setReverseLayout(true);
         recyclerView.setLayoutManager(layoutManager);
-        list = createDataset();
         adapter = new ConversationAdapter(list);
         recyclerView.setAdapter(adapter);
     }
 
-    private List<ConversationItem> createDataset() {
+    /*private List<ConversationItem> createDataset() {
         list.add(new ConversationItem("1",dateFormat.format(date), 0));
         list.add(new ConversationItem("2",dateFormat.format(date), 1));
         list.add(new ConversationItem("3\n" +
@@ -92,7 +92,7 @@ public class ConversationActivity extends AppCompatActivity implements LoaderMan
                 "13", dateFormat.format(date), 0));
         list.add(new ConversationItem("das", dateFormat.format(date), 1));
         return list;
-    }
+    }*/
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -102,7 +102,7 @@ public class ConversationActivity extends AppCompatActivity implements LoaderMan
 
     @Override
     public Loader<List<ConversationItem>> onCreateLoader(int id, Bundle args) {
-        return new MessageLoader(this);
+        return new MessageLoader(this, userName);
     }
 
     @Override
@@ -120,24 +120,48 @@ public class ConversationActivity extends AppCompatActivity implements LoaderMan
     public static class MessageLoader extends AsyncTaskLoader<List<ConversationItem>>{
 
         private List<ConversationItem> data;
+        private String userName;
 
-        public MessageLoader(Context context) {
+        public MessageLoader(Context context, String userName) {
             super(context);
+            this.userName = userName;
         }
 
         @Override
         public List<ConversationItem> loadInBackground() {
+            // emulating loading
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
             DateFormat dateFormat = new SimpleDateFormat("HH:mm");
             Date date = new Date();
             List<ConversationItem> data = new ArrayList<>();
-            data.add(new ConversationItem("Hop hop", dateFormat.format(date), 1));
-            data.add(new ConversationItem("Lalalalei", dateFormat.format(date), 1));
-            data.add(new ConversationItem("I am fine", dateFormat.format(date), 1));
+
+            switch (userName){
+                case "Мама":{
+                    data.add(new ConversationItem("Сообщение мамы", dateFormat.format(date), 1));
+                    data.add(new ConversationItem("Мое сообщение", dateFormat.format(date), 0));
+                    data.add(new ConversationItem("Сообщение мамы", dateFormat.format(date), 1));
+                    break;
+                }
+                case "Папа":{
+                    data.add(new ConversationItem("Сообщение папы", dateFormat.format(date), 1));
+                    data.add(new ConversationItem("Мое сообщение", dateFormat.format(date), 0));
+                    data.add(new ConversationItem("Сообщение папы", dateFormat.format(date), 1));
+                    break;
+                }
+                default:{
+                    data.add(new ConversationItem("Сообщение noname", dateFormat.format(date), 1));
+                    data.add(new ConversationItem("Мое сообщение", dateFormat.format(date), 1));
+                    data.add(new ConversationItem("Сообщение noname", dateFormat.format(date), 0));
+                    break;
+                }
+            }
+
+
             return data;
         }
 
