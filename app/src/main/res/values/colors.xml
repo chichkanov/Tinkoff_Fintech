@@ -8,4 +8,5 @@
     <color name="primary_darker">#CC1D1D</color>
     <color name="grey">#e6e6e6</color>
     <color name="greyer">#eaeaea</color>
+    <color name="grey200">#EEEEEE</color>
 </resources>
