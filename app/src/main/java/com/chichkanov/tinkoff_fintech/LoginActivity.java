@@ -24,6 +24,8 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.Lo
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (PrefManager.getInstance().getLogin() != null) startNextScreen();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -36,7 +38,7 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.Lo
             public void onClick(View view) {
                 if (login.length() > 0 && password.length() > 0) {
                     new LoginActivity.LoadingDialogFragment().show(getSupportFragmentManager(), LoadingDialogFragment.TAG);
-                    new LoginTask(loginFragment).execute();
+                    new LoginTask(loginFragment).execute(new String[]{login.getText().toString()});
                 } else {
                     Toast.makeText(getApplicationContext(), "Введите правильные данные!", Toast.LENGTH_SHORT).show();
                 }
@@ -61,8 +63,8 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.Lo
 
     private void startNextScreen() {
         Intent intent = new Intent(this, NavigationActivity.class);
-        intent.putExtra("login", login.getText().toString());
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.putExtra("login", PrefManager.getInstance().getLogin());
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 
@@ -95,7 +97,6 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.Lo
 
         public static final String TAG = "LoadingDialogFragment";
 
-        @Nullable
         @Override
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
             return inflater.inflate(R.layout.dialog_fragment_loading, null);

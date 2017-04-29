@@ -5,10 +5,6 @@ import android.util.Log;
 
 import java.lang.ref.WeakReference;
 
-/**
- * Created by chichkanov on 10.04.17.
- */
-
 public class LoginTask extends AsyncTask<String[], Void, Boolean> {
 
     private WeakReference<LoginFragment> loginFragment;
@@ -24,6 +20,7 @@ public class LoginTask extends AsyncTask<String[], Void, Boolean> {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        PrefManager.getInstance().saveLogin(params[0][0]);
         return true;
     }
 
