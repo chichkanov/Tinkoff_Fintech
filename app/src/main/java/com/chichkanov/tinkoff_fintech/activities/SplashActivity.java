@@ -46,6 +46,7 @@ public class SplashActivity extends AppCompatActivity {
         Intent intent = new Intent(this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+        overridePendingTransition(R.anim.anim_fade_in, R.anim.anim_fade_out);
     }
 
     private void startMainScreen() {
@@ -53,6 +54,7 @@ public class SplashActivity extends AppCompatActivity {
         intent.putExtra("login", PrefManager.getInstance().getLogin());
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+        overridePendingTransition(R.anim.anim_fade_in, R.anim.anim_fade_out);
     }
 }
 
