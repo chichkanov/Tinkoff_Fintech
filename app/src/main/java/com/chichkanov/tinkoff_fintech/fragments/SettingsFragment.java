@@ -1,7 +1,9 @@
-package com.chichkanov.tinkoff_fintech;
+package com.chichkanov.tinkoff_fintech.fragments;
 
 import android.os.Bundle;
 import android.support.v7.preference.PreferenceFragmentCompat;
+
+import com.chichkanov.tinkoff_fintech.R;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 

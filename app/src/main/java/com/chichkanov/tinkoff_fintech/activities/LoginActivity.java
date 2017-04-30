@@ -1,4 +1,4 @@
-package com.chichkanov.tinkoff_fintech;
+package com.chichkanov.tinkoff_fintech.activities;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -14,6 +14,11 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.chichkanov.tinkoff_fintech.LoginTask;
+import com.chichkanov.tinkoff_fintech.PrefManager;
+import com.chichkanov.tinkoff_fintech.R;
+import com.chichkanov.tinkoff_fintech.fragments.LoginFragment;
 
 public class LoginActivity extends AppCompatActivity implements LoginFragment.LoginListener {
 

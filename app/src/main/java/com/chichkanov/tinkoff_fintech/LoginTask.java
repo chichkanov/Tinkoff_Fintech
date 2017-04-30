@@ -1,7 +1,8 @@
 package com.chichkanov.tinkoff_fintech;
 
 import android.os.AsyncTask;
-import android.util.Log;
+
+import com.chichkanov.tinkoff_fintech.fragments.LoginFragment;
 
 import java.lang.ref.WeakReference;
 

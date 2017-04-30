@@ -5,7 +5,7 @@
     android:id="@+id/activity_about_app"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.chichkanov.tinkoff_fintech.NavigationActivity">
+    tools:context="com.chichkanov.tinkoff_fintech.activities.NavigationActivity">
 
     <ImageView
         android:id="@+id/iv_about_app"

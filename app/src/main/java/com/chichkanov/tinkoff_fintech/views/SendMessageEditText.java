@@ -1,4 +1,4 @@
-package com.chichkanov.tinkoff_fintech;
+package com.chichkanov.tinkoff_fintech.views;
 
 import android.content.Context;
 import android.text.Editable;
@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+
+import com.chichkanov.tinkoff_fintech.R;
 
 public class SendMessageEditText extends LinearLayout {
 

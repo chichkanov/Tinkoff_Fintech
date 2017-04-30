@@ -4,9 +4,9 @@
     android:id="@+id/activity_conversation"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.chichkanov.tinkoff_fintech.ConversationActivity">
+    tools:context="com.chichkanov.tinkoff_fintech.activities.ConversationActivity">
 
-    <com.chichkanov.tinkoff_fintech.SendMessageEditText
+    <com.chichkanov.tinkoff_fintech.views.SendMessageEditText
         android:id="@+id/send_message_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -1,4 +1,4 @@
-package com.chichkanov.tinkoff_fintech;
+package com.chichkanov.tinkoff_fintech.activities;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,6 +14,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+
+import com.chichkanov.tinkoff_fintech.R;
+import com.chichkanov.tinkoff_fintech.fragments.AboutAppFragment;
+import com.chichkanov.tinkoff_fintech.fragments.DialogsFragment;
+import com.chichkanov.tinkoff_fintech.fragments.SettingsFragment;
 
 
 public class NavigationActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{

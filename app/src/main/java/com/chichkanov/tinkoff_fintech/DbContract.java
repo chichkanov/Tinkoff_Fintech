@@ -11,6 +11,13 @@ public class DbContract {
             DialogEntry.COLUMN_DESCRIPTION + " TEXT" +
             " )";
 
+    static final String CREATE_MESSAGE_SCRIPT = "CREATE TABLE " + DialogEntry.TABLE_NAME + " (" +
+            Messages._ID + " INTEGER PRIMARY KEY," +
+            Messages.COLUMN_AUTHOR_ID + " TEXT," +
+            Messages.COLUMN_TIMESTAMP + " INTEGER," +
+            Messages.COLUMN_TEXT + " TEXT" +
+            " )";
+
     private DbContract() {
         //no instance
     }
@@ -20,5 +27,12 @@ public class DbContract {
         public static final String COLUMN_TITLE = "title";
         public static final String COLUMN_TIMESTAMP = "timestamp";
         public static final String COLUMN_DESCRIPTION = "description";
+    }
+
+    public static final class Messages implements BaseColumns {
+        public static final String TABLE_NAME = "messages";
+        public static final String COLUMN_AUTHOR_ID = "author";
+        public static final String COLUMN_TIMESTAMP = "timestamp";
+        public static final String COLUMN_TEXT = "text";
     }
 }

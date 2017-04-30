@@ -1,16 +1,21 @@
-package com.chichkanov.tinkoff_fintech;
+package com.chichkanov.tinkoff_fintech.fragments;
 
 import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
+
+import com.chichkanov.tinkoff_fintech.App;
+import com.chichkanov.tinkoff_fintech.DbContract;
+import com.chichkanov.tinkoff_fintech.R;
+import com.chichkanov.tinkoff_fintech.models.DialogsItem;
 
 import java.util.Date;
 
@@ -34,12 +39,13 @@ public class AddContactDialogFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 if (et.getText().toString().trim().length() > 0) {
+                    SQLiteDatabase writableDatabase = App.getDbhelper().getWritableDatabase();
                     DialogsItem dialogItem = new DialogsItem(et.getText().toString().trim(), "Empty");
                     ContentValues contentValues = new ContentValues();
                     contentValues.put(DbContract.DialogEntry.COLUMN_TITLE, dialogItem.getTitle());
                     contentValues.put(DbContract.DialogEntry.COLUMN_DESCRIPTION, dialogItem.getDesc());
                     contentValues.put(DbContract.DialogEntry.COLUMN_TIMESTAMP, new Date().getTime());
-                    DialogsFragment.writableDatabase.insert(DbContract.DialogEntry.TABLE_NAME, null, contentValues);
+                    writableDatabase.insert(DbContract.DialogEntry.TABLE_NAME, null, contentValues);
 
                     if (onContentChanged != null) {
                         onContentChanged.itemAdded();

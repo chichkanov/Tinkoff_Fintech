@@ -1,4 +1,4 @@
-package com.chichkanov.tinkoff_fintech;
+package com.chichkanov.tinkoff_fintech.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,6 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.chichkanov.tinkoff_fintech.models.DialogsItem;
+import com.chichkanov.tinkoff_fintech.OnItemClickListener;
+import com.chichkanov.tinkoff_fintech.R;
 
 import java.util.List;
 

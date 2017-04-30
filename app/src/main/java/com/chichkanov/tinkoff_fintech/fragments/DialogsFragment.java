@@ -1,20 +1,16 @@
-package com.chichkanov.tinkoff_fintech;
+package com.chichkanov.tinkoff_fintech.fragments;
 
-import android.app.Dialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
-import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,15 +19,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.Toast;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import com.chichkanov.tinkoff_fintech.App;
+import com.chichkanov.tinkoff_fintech.activities.ConversationActivity;
+import com.chichkanov.tinkoff_fintech.DbContract;
+import com.chichkanov.tinkoff_fintech.models.DialogsItem;
+import com.chichkanov.tinkoff_fintech.OnItemClickListener;
+import com.chichkanov.tinkoff_fintech.R;
+import com.chichkanov.tinkoff_fintech.adapters.DialogsAdapter;
+
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class DialogsFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<DialogsItem>> {
@@ -40,9 +37,9 @@ public class DialogsFragment extends Fragment implements LoaderManager.LoaderCal
 
     private RecyclerView recyclerView;
     private DialogsAdapter adapter;
-    public static SQLiteDatabase writableDatabase;
     private DialogsLoader dialogsLoader;
     private LoaderManager.LoaderCallbacks<List<DialogsItem>> callbacks;
+    private List<DialogsItem> dataset;
 
     private static final String ARG_TITLE = "Диалоги";
     private String title;
@@ -92,7 +89,7 @@ public class DialogsFragment extends Fragment implements LoaderManager.LoaderCal
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         getActivity().setTitle(title);
-        writableDatabase = App.getDbhelper().getWritableDatabase();
+
         dialogsLoader = new DialogsLoader(getContext());
         getActivity().getSupportLoaderManager().initLoader(DIALOGS_LOADER_ID, null, this);
     }
@@ -102,7 +99,7 @@ public class DialogsFragment extends Fragment implements LoaderManager.LoaderCal
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        final List<DialogsItem> dataset = createDataset();
+        dataset = createDataset();
         adapter = new DialogsAdapter(dataset, new OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
@@ -134,11 +131,12 @@ public class DialogsFragment extends Fragment implements LoaderManager.LoaderCal
     public void onLoadFinished(Loader<List<DialogsItem>> loader, List<DialogsItem> data) {
         Log.i("LoaderFinished", "HEKSDA");
         adapter.setItems(data);
+        dataset = data;
     }
 
     @Override
     public void onLoaderReset(Loader<List<DialogsItem>> loader) {
-
+        // Do nothing
     }
 
 
@@ -214,7 +212,8 @@ public class DialogsFragment extends Fragment implements LoaderManager.LoaderCal
 
         @NonNull
         private ArrayList<DialogsItem> getPreviousDialogItems() {
-            Cursor cursor = writableDatabase.query(DbContract.DialogEntry.TABLE_NAME,
+            SQLiteDatabase readableDatabase = App.getDbhelper().getReadableDatabase();
+            Cursor cursor = readableDatabase.query(DbContract.DialogEntry.TABLE_NAME,
                     new String[]{
                             DbContract.DialogEntry.COLUMN_TITLE,
                             DbContract.DialogEntry.COLUMN_DESCRIPTION

@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/login_horizontal_margin"
     android:paddingRight="@dimen/login_horizontal_margin"
     android:paddingTop="@dimen/login_vertical_margin"
-    tools:context="com.chichkanov.tinkoff_fintech.LoginActivity">
+    tools:context="com.chichkanov.tinkoff_fintech.activities.LoginActivity">
 
 
     <ImageView android:src="@drawable/logo"
