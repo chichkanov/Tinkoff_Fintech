@@ -36,7 +36,18 @@ public class DialogsAdapter extends RecyclerView.Adapter<DialogsAdapter.ViewHold
         return dataset.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public void addDialog(DialogsItem dialogItem) {
+        dataset.add(dialogItem);
+        notifyItemInserted(dataset.size());
+    }
+
+
+    public void setItems(List<DialogsItem> dialogItems) {
+        dataset = dialogItems;
+        notifyDataSetChanged();
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView imageView;
         public TextView title;
@@ -54,7 +65,7 @@ public class DialogsAdapter extends RecyclerView.Adapter<DialogsAdapter.ViewHold
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(listener != null){
+                    if (listener != null) {
                         listener.onItemClick(getAdapterPosition());
                     }
                 }
