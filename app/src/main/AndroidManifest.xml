@@ -12,13 +12,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activities.LoginActivity"
-            android:theme="@style/AppTheme.Login">
+            android:name=".activities.SplashActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activities.LoginActivity"
+            android:theme="@style/AppTheme.Login" />
         <activity
             android:name=".activities.NavigationActivity"
             android:theme="@style/AppTheme.NoActionBar" />
