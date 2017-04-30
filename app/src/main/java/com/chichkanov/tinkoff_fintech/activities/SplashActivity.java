@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -22,13 +23,16 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         final ImageView imageView = (ImageView) findViewById(R.id.imageView);
-        final Drawable drawable = imageView.getDrawable();
+
         final Handler handler = new Handler();
-
-        handler.post(new Runnable(){
+        handler.post(new Runnable() {
             public void run() {
-                ((Animatable) drawable).start();
-
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    AnimatedVectorDrawable d = (AnimatedVectorDrawable) getDrawable(R.drawable.animated_vector);
+                    imageView.setImageDrawable(d);
+                    assert d != null;
+                    d.start();
+                }
                 Runnable afterExe = new Runnable() {
                     @Override
                     public void run() {
@@ -36,8 +40,7 @@ public class SplashActivity extends AppCompatActivity {
                         else startLoginScreen();
                     }
                 };
-
-                handler.postDelayed(afterExe, 2000);
+                handler.postDelayed(afterExe, 1000);
             }
         });
     }
