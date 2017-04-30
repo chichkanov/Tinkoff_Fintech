@@ -39,8 +39,9 @@ public class AddContactDialogFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 if (et.getText().toString().trim().length() > 0) {
+                    // TODO check if element already in db
                     SQLiteDatabase writableDatabase = App.getDbhelper().getWritableDatabase();
-                    DialogsItem dialogItem = new DialogsItem(et.getText().toString().trim(), "Empty");
+                    DialogsItem dialogItem = new DialogsItem(et.getText().toString().trim(), null, null);
                     ContentValues contentValues = new ContentValues();
                     contentValues.put(DbContract.DialogEntry.COLUMN_TITLE, dialogItem.getTitle());
                     contentValues.put(DbContract.DialogEntry.COLUMN_DESCRIPTION, dialogItem.getDesc());

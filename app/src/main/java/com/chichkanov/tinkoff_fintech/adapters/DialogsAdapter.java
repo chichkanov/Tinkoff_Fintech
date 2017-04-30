@@ -33,6 +33,7 @@ public class DialogsAdapter extends RecyclerView.Adapter<DialogsAdapter.ViewHold
     public void onBindViewHolder(DialogsAdapter.ViewHolder holder, int position) {
         holder.title.setText(dataset.get(position).getTitle());
         holder.desc.setText(dataset.get(position).getDesc());
+        holder.date.setText(dataset.get(position).getDate());
     }
 
     @Override
@@ -45,7 +46,6 @@ public class DialogsAdapter extends RecyclerView.Adapter<DialogsAdapter.ViewHold
         notifyItemInserted(dataset.size());
     }
 
-
     public void setItems(List<DialogsItem> dialogItems) {
         dataset = dialogItems;
         notifyDataSetChanged();
@@ -56,11 +56,13 @@ public class DialogsAdapter extends RecyclerView.Adapter<DialogsAdapter.ViewHold
         public ImageView imageView;
         public TextView title;
         public TextView desc;
+        public TextView date;
 
         public ViewHolder(View view, OnItemClickListener listener) {
             super(view);
             title = (TextView) view.findViewById(R.id.tv_dialog_title);
             desc = (TextView) view.findViewById(R.id.tv_dialog_desc);
+            date = (TextView) view.findViewById(R.id.tv_dialog_date);
             imageView = (ImageView) view.findViewById(R.id.iv_dialog_photo);
             setListener(listener);
         }

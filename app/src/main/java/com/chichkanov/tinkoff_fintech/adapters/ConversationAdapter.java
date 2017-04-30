@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.chichkanov.tinkoff_fintech.ConversationItem;
 import com.chichkanov.tinkoff_fintech.R;
+import com.chichkanov.tinkoff_fintech.models.DialogsItem;
 
 import java.util.List;
 
@@ -25,11 +26,11 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
-        switch (viewType){
-            case MESSAGE_YOU :
+        switch (viewType) {
+            case MESSAGE_YOU:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_conversation_you, parent, false);
                 return new YourMessageViewHolder(view);
-            case MESSAGE_MATE :
+            case MESSAGE_MATE:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_conversation_mate, parent, false);
                 return new MateMessageViewHolder(view);
         }
@@ -39,18 +40,28 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ConversationItem object = dataset.get(position);
-        if(object != null){
-            switch (object.getType()){
-                case MESSAGE_MATE :
-                    ((MateMessageViewHolder)holder).message.setText(object.getMessage());
-                    ((MateMessageViewHolder)holder).date.setText(object.getDate());
+        if (object != null) {
+            switch (object.getType()) {
+                case MESSAGE_MATE:
+                    ((MateMessageViewHolder) holder).message.setText(object.getMessage());
+                    ((MateMessageViewHolder) holder).date.setText(object.getDate());
                     break;
                 case MESSAGE_YOU:
-                    ((YourMessageViewHolder)holder).message.setText(object.getMessage());
-                    ((YourMessageViewHolder)holder).date.setText(object.getDate());
+                    ((YourMessageViewHolder) holder).message.setText(object.getMessage());
+                    ((YourMessageViewHolder) holder).date.setText(object.getDate());
                     break;
             }
         }
+    }
+
+    public void addDialog(ConversationItem conversationItem) {
+        dataset.add(conversationItem);
+        notifyItemInserted(dataset.size());
+    }
+
+    public void setItems(List<ConversationItem> conversationItem) {
+        dataset = conversationItem;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -61,16 +72,16 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public int getItemViewType(int position) {
         ConversationItem object = dataset.get(position);
-        if(object != null) return object.getType();
+        if (object != null) return object.getType();
         return 0;
     }
 
-    public void addItem(String message, int type){
+    public void addItem(String message, int type) {
         dataset.add(new ConversationItem(message, type));
         this.notifyItemInserted(dataset.size() - 1);
     }
 
-    public static class YourMessageViewHolder extends RecyclerView.ViewHolder{
+    public static class YourMessageViewHolder extends RecyclerView.ViewHolder {
 
         public TextView message;
         public TextView date;
@@ -82,7 +93,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
-    public static class MateMessageViewHolder extends RecyclerView.ViewHolder{
+    public static class MateMessageViewHolder extends RecyclerView.ViewHolder {
 
         public TextView message;
         public TextView date;

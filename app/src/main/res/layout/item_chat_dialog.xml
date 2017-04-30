@@ -16,27 +16,37 @@
         android:padding="16dp"
         app:srcCompat="@mipmap/ic_launcher" />
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/tv_dialog_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="16dp"
+        android:textSize="12sp"
+        tools:text="Date" />
+
+    <TextView
+        android:id="@+id/tv_dialog_title"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_toLeftOf="@id/tv_dialog_date"
         android:layout_toRightOf="@+id/iv_dialog_photo"
-        android:layout_centerVertical="true"
-        android:orientation="vertical">
+        android:textColor="#000000"
+        android:textSize="18sp"
+        tools:text="Тут заголовок" />
 
-        <TextView
-            android:id="@+id/tv_dialog_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            tools:text="Тут заголовок" />
-
-        <TextView
-            android:id="@+id/tv_dialog_desc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            tools:text="Тут последнее сообщение" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_dialog_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_dialog_title"
+        android:layout_marginBottom="16dp"
+        android:layout_toRightOf="@+id/iv_dialog_photo"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textSize="14sp"
+        tools:text="Тут последнее сообщение" />
 
 </RelativeLayout>

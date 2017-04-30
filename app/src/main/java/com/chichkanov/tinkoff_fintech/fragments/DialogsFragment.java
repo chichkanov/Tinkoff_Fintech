@@ -28,7 +28,10 @@ import com.chichkanov.tinkoff_fintech.OnItemClickListener;
 import com.chichkanov.tinkoff_fintech.R;
 import com.chichkanov.tinkoff_fintech.adapters.DialogsAdapter;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class DialogsFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<DialogsItem>> {
@@ -216,7 +219,8 @@ public class DialogsFragment extends Fragment implements LoaderManager.LoaderCal
             Cursor cursor = readableDatabase.query(DbContract.DialogEntry.TABLE_NAME,
                     new String[]{
                             DbContract.DialogEntry.COLUMN_TITLE,
-                            DbContract.DialogEntry.COLUMN_DESCRIPTION
+                            DbContract.DialogEntry.COLUMN_DESCRIPTION,
+                            DbContract.DialogEntry.COLUMN_DESCRIPTION_DATE
                     },
                     null,
                     null,
@@ -227,9 +231,14 @@ public class DialogsFragment extends Fragment implements LoaderManager.LoaderCal
             while (cursor.moveToNext()) {
                 int titleIndex = cursor.getColumnIndex(DbContract.DialogEntry.COLUMN_TITLE);
                 int descriptionIndex = cursor.getColumnIndex(DbContract.DialogEntry.COLUMN_DESCRIPTION);
+                int descriptionDateIndex = cursor.getColumnIndex(DbContract.DialogEntry.COLUMN_DESCRIPTION_DATE);
+                DateFormat dateFormat = new SimpleDateFormat("HH:mm");
+
                 String title = cursor.getString(titleIndex);
-                String description = cursor.getString(descriptionIndex);
-                dialogItems.add(new DialogsItem(title, description));
+                String description = cursor.getString(descriptionIndex) != null ? cursor.getString(descriptionIndex) : "История сообщений пуста";
+                String descriptionDate = cursor.getString(descriptionDateIndex) != null ? dateFormat.format(new Date(cursor.getString(descriptionDateIndex))) : "";
+
+                dialogItems.add(new DialogsItem(title, description, descriptionDate));
             }
             cursor.close();
             return dialogItems;

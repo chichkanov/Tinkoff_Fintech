@@ -1,5 +1,10 @@
 package com.chichkanov.tinkoff_fintech.activities;
+
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.support.annotation.NonNull;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
@@ -12,9 +17,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import com.chichkanov.tinkoff_fintech.App;
 import com.chichkanov.tinkoff_fintech.ConversationItem;
+import com.chichkanov.tinkoff_fintech.DbContract;
 import com.chichkanov.tinkoff_fintech.R;
 import com.chichkanov.tinkoff_fintech.adapters.ConversationAdapter;
+import com.chichkanov.tinkoff_fintech.models.DialogsItem;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,18 +34,18 @@ public class ConversationActivity extends AppCompatActivity implements LoaderMan
 
     private final static int MESSAGE_LOADER_ID = 0;
 
+    private static final int MESSAGE_YOU = 0;
+    private static final int MESSAGE_MATE = 1;
+
     private List<ConversationItem> list = new ArrayList<>();
 
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
+    private ConversationAdapter adapter;
     private ImageButton sendMessageButton;
     private EditText sendMessageEditText;
     private Toolbar toolbar;
     private MessageLoader messageLoader;
     private String userName;
-
-    DateFormat dateFormat = new SimpleDateFormat("HH:mm");
-    Date date = new Date();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +62,8 @@ public class ConversationActivity extends AppCompatActivity implements LoaderMan
             @Override
             public void onClick(View v) {
                 if (sendMessageEditText.getText().length() > 0 && sendMessageEditText.getText().toString().trim().length() > 0) {
-                    list.add(0, new ConversationItem(sendMessageEditText.getText().toString().trim(), dateFormat.format(date), 0));
-                    adapter.notifyItemInserted(0);
-                    sendMessageEditText.setText("");
-                    recyclerView.scrollToPosition(0);
+                    String text = sendMessageEditText.getText().toString().trim();
+                    addMessage(text);
                 }
             }
         });
@@ -66,41 +72,41 @@ public class ConversationActivity extends AppCompatActivity implements LoaderMan
         getSupportLoaderManager().initLoader(MESSAGE_LOADER_ID, null, this);
     }
 
-    private void initRecyclerView(){
+    private void initRecyclerView() {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view_conversation);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(layoutManager);
         adapter = new ConversationAdapter(list);
         recyclerView.setAdapter(adapter);
     }
 
-    /*private List<ConversationItem> createDataset() {
-        list.add(new ConversationItem("1",dateFormat.format(date), 0));
-        list.add(new ConversationItem("2",dateFormat.format(date), 1));
-        list.add(new ConversationItem("3\n" +
-                "3", dateFormat.format(date), 0));
-        list.add(new ConversationItem("4!", dateFormat.format(date), 1));
-        list.add(new ConversationItem("5 —\n" +
-                "5", dateFormat.format(date), 0));
-        list.add(new ConversationItem("6 6 6", dateFormat.format(date), 1));
-        list.add(new ConversationItem("7", dateFormat.format(date), 1));
-        list.add(new ConversationItem("8", dateFormat.format(date), 1));
-        list.add(new ConversationItem("999999", dateFormat.format(date), 0));
-        list.add(new ConversationItem("10", dateFormat.format(date), 1));
-        list.add(new ConversationItem("11", dateFormat.format(date), 0));
-        list.add(new ConversationItem("12.", dateFormat.format(date), 1));
-        list.add(new ConversationItem("13\n" +
-                "13", dateFormat.format(date), 0));
-        list.add(new ConversationItem("das", dateFormat.format(date), 1));
-        return list;
-    }*/
-
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    private void addMessage(String text) {
+        SQLiteDatabase writableDatabase = App.getDbhelper().getWritableDatabase();
+
+        String date = new Date().toString();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DbContract.MessageEntry.COLUMN_AUTHOR_ID, MESSAGE_YOU);
+        contentValues.put(DbContract.MessageEntry.COLUMN_DIALOG_ID, userName);
+        contentValues.put(DbContract.MessageEntry.COLUMN_TEXT, text);
+        contentValues.put(DbContract.MessageEntry.COLUMN_TIMESTAMP, date);
+
+        writableDatabase.insert(DbContract.MessageEntry.TABLE_NAME, null, contentValues);
+        sendMessageEditText.setText("");
+        getSupportLoaderManager().restartLoader(MESSAGE_LOADER_ID, null, this);
+
+        ContentValues cv = new ContentValues();
+        cv.put(DbContract.DialogEntry.COLUMN_DESCRIPTION, text);
+        cv.put(DbContract.DialogEntry.COLUMN_DESCRIPTION_DATE, date);
+        writableDatabase.update(DbContract.DialogEntry.TABLE_NAME, cv, DbContract.DialogEntry.COLUMN_TITLE + "= ?", new String[]{userName});
     }
 
     @Override
@@ -110,9 +116,8 @@ public class ConversationActivity extends AppCompatActivity implements LoaderMan
 
     @Override
     public void onLoadFinished(Loader<List<ConversationItem>> loader, List<ConversationItem> data) {
-        this.list.addAll(0, data);
-        adapter.notifyItemRangeInserted(0, data.size());
-        recyclerView.scrollToPosition(0);
+        adapter.setItems(data);
+        list = data;
     }
 
     @Override
@@ -120,7 +125,7 @@ public class ConversationActivity extends AppCompatActivity implements LoaderMan
         adapter.notifyDataSetChanged();
     }
 
-    public static class MessageLoader extends AsyncTaskLoader<List<ConversationItem>>{
+    public static class MessageLoader extends AsyncTaskLoader<List<ConversationItem>> {
 
         private List<ConversationItem> data;
         private String userName;
@@ -132,46 +137,14 @@ public class ConversationActivity extends AppCompatActivity implements LoaderMan
 
         @Override
         public List<ConversationItem> loadInBackground() {
-            // emulating loading
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            DateFormat dateFormat = new SimpleDateFormat("HH:mm");
-            Date date = new Date();
-            List<ConversationItem> data = new ArrayList<>();
-
-            switch (userName){
-                case "Мама":{
-                    data.add(new ConversationItem("Сообщение мамы", dateFormat.format(date), 1));
-                    data.add(new ConversationItem("Мое сообщение", dateFormat.format(date), 0));
-                    data.add(new ConversationItem("Сообщение мамы", dateFormat.format(date), 1));
-                    break;
-                }
-                case "Папа":{
-                    data.add(new ConversationItem("Сообщение папы", dateFormat.format(date), 1));
-                    data.add(new ConversationItem("Мое сообщение", dateFormat.format(date), 0));
-                    data.add(new ConversationItem("Сообщение папы", dateFormat.format(date), 1));
-                    break;
-                }
-                default:{
-                    data.add(new ConversationItem("Сообщение noname", dateFormat.format(date), 1));
-                    data.add(new ConversationItem("Мое сообщение", dateFormat.format(date), 1));
-                    data.add(new ConversationItem("Сообщение noname", dateFormat.format(date), 0));
-                    break;
-                }
-            }
-
-
+            List<ConversationItem> data = getPreviousDialogItems();
             return data;
         }
 
         @Override
         public void deliverResult(List<ConversationItem> newData) {
-            if(isReset()){
-                if(data != null){
+            if (isReset()) {
+                if (data != null) {
                     onReleaseResources(data);
                 }
             }
@@ -179,25 +152,18 @@ public class ConversationActivity extends AppCompatActivity implements LoaderMan
             List<ConversationItem> oldData = data;
             data = newData;
 
-            if(isStarted()){
+            if (isStarted()) {
                 super.deliverResult(newData);
             }
 
-            if(oldData != null){
+            if (oldData != null) {
                 onReleaseResources(oldData);
             }
         }
 
         @Override
         protected void onStartLoading() {
-            if(data != null){
-                deliverResult(data);
-            }
-
-            if(takeContentChanged() || data == null){
-                forceLoad();
-            }
-
+            forceLoad();
         }
 
         @Override
@@ -215,14 +181,48 @@ public class ConversationActivity extends AppCompatActivity implements LoaderMan
         protected void onReset() {
             super.onReset();
             onStopLoading();
-            if(data != null){
+            if (data != null) {
                 onReleaseResources(data);
                 data = null;
             }
         }
 
-        private void onReleaseResources(List<ConversationItem> data){
+        private void onReleaseResources(List<ConversationItem> data) {
 
+        }
+
+        @NonNull
+        private ArrayList<ConversationItem> getPreviousDialogItems() {
+            SQLiteDatabase readableDatabase = App.getDbhelper().getReadableDatabase();
+            Cursor cursor = readableDatabase.query(DbContract.MessageEntry.TABLE_NAME,
+                    new String[]{
+                            DbContract.MessageEntry.COLUMN_AUTHOR_ID,
+                            DbContract.MessageEntry.COLUMN_TIMESTAMP,
+                            DbContract.MessageEntry.COLUMN_TEXT,
+                            DbContract.MessageEntry.COLUMN_DIALOG_ID
+                    },
+                    null,
+                    null,
+                    null,
+                    null,
+                    null);
+            ArrayList<ConversationItem> dialogItems = new ArrayList<>();
+            while (cursor.moveToNext()) {
+                int textIndex = cursor.getColumnIndex(DbContract.MessageEntry.COLUMN_TEXT);
+                int timeIndex = cursor.getColumnIndex(DbContract.MessageEntry.COLUMN_TIMESTAMP);
+                int dialogIndex = cursor.getColumnIndex(DbContract.MessageEntry.COLUMN_DIALOG_ID);
+
+                String text = cursor.getString(textIndex);
+
+                DateFormat dateFormat = new SimpleDateFormat("HH:mm");
+                String time = dateFormat.format(new Date(cursor.getString(timeIndex)));
+
+                String dialog = cursor.getString(dialogIndex);
+
+                if (dialog.equals(userName)) dialogItems.add(new ConversationItem(text, time, 0));
+            }
+            cursor.close();
+            return dialogItems;
         }
     }
 }

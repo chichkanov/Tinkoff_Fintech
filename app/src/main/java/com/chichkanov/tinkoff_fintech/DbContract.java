@@ -8,14 +8,16 @@ public class DbContract {
             DialogEntry._ID + " INTEGER PRIMARY KEY," +
             DialogEntry.COLUMN_TITLE + " TEXT," +
             DialogEntry.COLUMN_TIMESTAMP + " INTEGER," +
-            DialogEntry.COLUMN_DESCRIPTION + " TEXT" +
+            DialogEntry.COLUMN_DESCRIPTION + " TEXT," +
+            DialogEntry.COLUMN_DESCRIPTION_DATE + " TEXT" +
             " )";
 
-    static final String CREATE_MESSAGE_SCRIPT = "CREATE TABLE " + DialogEntry.TABLE_NAME + " (" +
-            Messages._ID + " INTEGER PRIMARY KEY," +
-            Messages.COLUMN_AUTHOR_ID + " TEXT," +
-            Messages.COLUMN_TIMESTAMP + " INTEGER," +
-            Messages.COLUMN_TEXT + " TEXT" +
+    static final String CREATE_MESSAGE_SCRIPT = "CREATE TABLE " + MessageEntry.TABLE_NAME + " (" +
+            MessageEntry._ID + " INTEGER PRIMARY KEY," +
+            MessageEntry.COLUMN_DIALOG_ID + " TEXT," +
+            MessageEntry.COLUMN_AUTHOR_ID + " INTEGER," +
+            MessageEntry.COLUMN_TIMESTAMP + " TEXT," +
+            MessageEntry.COLUMN_TEXT + " TEXT" +
             " )";
 
     private DbContract() {
@@ -27,10 +29,12 @@ public class DbContract {
         public static final String COLUMN_TITLE = "title";
         public static final String COLUMN_TIMESTAMP = "timestamp";
         public static final String COLUMN_DESCRIPTION = "description";
+        public static final String COLUMN_DESCRIPTION_DATE = "date";
     }
 
-    public static final class Messages implements BaseColumns {
+    public static final class MessageEntry implements BaseColumns {
         public static final String TABLE_NAME = "messages";
+        public static final String COLUMN_DIALOG_ID = "dialog";
         public static final String COLUMN_AUTHOR_ID = "author";
         public static final String COLUMN_TIMESTAMP = "timestamp";
         public static final String COLUMN_TEXT = "text";

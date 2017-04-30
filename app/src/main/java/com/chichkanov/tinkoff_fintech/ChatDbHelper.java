@@ -15,6 +15,7 @@ public class ChatDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        db.execSQL(DbContract.CREATE_MESSAGE_SCRIPT);
         db.execSQL(DbContract.CREATE_DIALOG_SCRIPT);
     }
 
