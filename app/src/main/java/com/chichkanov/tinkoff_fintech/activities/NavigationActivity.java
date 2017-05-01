@@ -20,6 +20,10 @@ import com.chichkanov.tinkoff_fintech.fragments.AboutAppFragment;
 import com.chichkanov.tinkoff_fintech.fragments.DialogsFragment;
 import com.chichkanov.tinkoff_fintech.fragments.SettingsFragment;
 
+import agency.tango.android.avatarview.IImageLoader;
+import agency.tango.android.avatarview.loader.PicassoLoader;
+import agency.tango.android.avatarview.views.AvatarView;
+
 
 public class NavigationActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -46,6 +50,10 @@ public class NavigationActivity extends AppCompatActivity implements NavigationV
         login = (TextView) header.findViewById(R.id.tv_menu_login);
         String data = getIntent().getExtras().getString("login", "Anonymous");
         login.setText(data);
+
+        AvatarView avatarView = (AvatarView) header.findViewById(R.id.av_header_photo);
+        IImageLoader imageLoader = new PicassoLoader();
+        imageLoader.loadImage(avatarView, "Тут будет ссылка на аватар", data);
 
         if (savedInstanceState == null) {
             navigationView.getMenu().getItem(MENU_DIALOGS).setChecked(true);

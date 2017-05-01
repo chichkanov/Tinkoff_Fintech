@@ -14,7 +14,6 @@
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_centerVertical="true"
-        app:av_border_color="@android:color/white"
         app:av_text_size_percentage="35" />
 
     <TextView

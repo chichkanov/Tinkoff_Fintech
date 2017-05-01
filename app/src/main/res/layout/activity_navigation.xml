@@ -18,7 +18,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        android:padding="5dp"
+        android:padding="6dp"
         app:headerLayout="@layout/layout_header_navigation"
         app:itemBackground="@drawable/menu_item_background"
         app:menu="@menu/menu_navigation_drawer" />
