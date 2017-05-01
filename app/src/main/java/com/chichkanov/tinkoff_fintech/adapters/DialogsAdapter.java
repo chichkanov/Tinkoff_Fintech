@@ -13,6 +13,10 @@ import com.chichkanov.tinkoff_fintech.R;
 
 import java.util.List;
 
+import agency.tango.android.avatarview.IImageLoader;
+import agency.tango.android.avatarview.loader.PicassoLoader;
+import agency.tango.android.avatarview.views.AvatarView;
+
 public class DialogsAdapter extends RecyclerView.Adapter<DialogsAdapter.ViewHolder> {
 
     private List<DialogsItem> dataset;
@@ -31,9 +35,13 @@ public class DialogsAdapter extends RecyclerView.Adapter<DialogsAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(DialogsAdapter.ViewHolder holder, int position) {
-        holder.title.setText(dataset.get(position).getTitle());
+        String userName = dataset.get(position).getTitle();
+        holder.title.setText(userName);
         holder.desc.setText(dataset.get(position).getDesc());
         holder.date.setText(dataset.get(position).getDate());
+
+        IImageLoader imageLoader = new PicassoLoader();
+        imageLoader.loadImage(holder.avatarView, "Тут будет ссылка на аватар", userName);
     }
 
     @Override
@@ -53,7 +61,7 @@ public class DialogsAdapter extends RecyclerView.Adapter<DialogsAdapter.ViewHold
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public ImageView imageView;
+        AvatarView avatarView;
         public TextView title;
         public TextView desc;
         public TextView date;
@@ -63,7 +71,7 @@ public class DialogsAdapter extends RecyclerView.Adapter<DialogsAdapter.ViewHold
             title = (TextView) view.findViewById(R.id.tv_dialog_title);
             desc = (TextView) view.findViewById(R.id.tv_dialog_desc);
             date = (TextView) view.findViewById(R.id.tv_dialog_date);
-            imageView = (ImageView) view.findViewById(R.id.iv_dialog_photo);
+            avatarView = (AvatarView) view.findViewById(R.id.av_dialog_photo);
             setListener(listener);
         }
 

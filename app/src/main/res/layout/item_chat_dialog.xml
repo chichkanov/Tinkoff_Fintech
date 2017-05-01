@@ -4,25 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="7dp"
     android:background="?android:attr/selectableItemBackground"
     android:gravity="center"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/iv_dialog_photo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <agency.tango.android.avatarview.views.AvatarView
+        android:id="@+id/av_dialog_photo"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_centerVertical="true"
-        android:padding="16dp"
-        app:srcCompat="@mipmap/ic_launcher" />
+        app:av_border_color="@android:color/white"
+        app:av_text_size_percentage="35" />
 
     <TextView
         android:id="@+id/tv_dialog_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:textSize="12sp"
         tools:text="Date" />
 
@@ -30,9 +30,10 @@
         android:id="@+id/tv_dialog_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginTop="12dp"
         android:layout_toLeftOf="@id/tv_dialog_date"
-        android:layout_toRightOf="@+id/iv_dialog_photo"
+        android:layout_toRightOf="@+id/av_dialog_photo"
         android:textColor="#000000"
         android:textSize="18sp"
         tools:text="Тут заголовок" />
@@ -42,10 +43,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_dialog_title"
-        android:layout_marginBottom="16dp"
-        android:layout_toRightOf="@+id/iv_dialog_photo"
+        android:layout_marginLeft="7dp"
+        android:layout_toRightOf="@+id/av_dialog_photo"
         android:ellipsize="end"
-        android:maxLines="2"
+        android:maxLines="1"
         android:textSize="14sp"
         tools:text="Тут последнее сообщение" />
 
