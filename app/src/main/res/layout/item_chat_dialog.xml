@@ -4,16 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="7dp"
     android:background="?android:attr/selectableItemBackground"
     android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="10dp">
 
     <agency.tango.android.avatarview.views.AvatarView
         android:id="@+id/av_dialog_photo"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_centerVertical="true"
+        app:av_border_width="0dp"
         app:av_text_size_percentage="35" />
 
     <TextView
@@ -21,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:textSize="12sp"
         tools:text="Date" />
 
@@ -29,8 +30,8 @@
         android:id="@+id/tv_dialog_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="7dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="8dp"
         android:layout_toLeftOf="@id/tv_dialog_date"
         android:layout_toRightOf="@+id/av_dialog_photo"
         android:textColor="#000000"
@@ -42,7 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_dialog_title"
-        android:layout_marginLeft="7dp"
+        android:layout_marginLeft="10dp"
         android:layout_toRightOf="@+id/av_dialog_photo"
         android:ellipsize="end"
         android:maxLines="1"

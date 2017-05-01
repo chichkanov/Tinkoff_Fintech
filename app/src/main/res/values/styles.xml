@@ -13,6 +13,13 @@
         <item name="android:dialogTheme">@style/CustomDialog</item>
     </style>
 
+    <style name="AppTheme.Conversation" parent="AppTheme">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@drawable/tile_bg</item>
+    </style>
+
     <style name="AppTheme.Login" parent="Theme.AppCompat.NoActionBar">
         <item name="colorControlNormal">@color/iron</item>
         <item name="colorControlActivated">@color/white</item>

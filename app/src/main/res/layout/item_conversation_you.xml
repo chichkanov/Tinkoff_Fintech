@@ -1,33 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="right"
-    android:orientation="vertical"
-    android:paddingBottom="7dp"
-    android:paddingRight="10dp">
+    android:layout_marginBottom="5dp"
+    android:layout_marginRight="5dp">
 
-    <TextView
-        android:id="@+id/tv_conversation_you"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:layout_marginLeft="100dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="@dimen/conversation_form_margin"
         android:background="@drawable/item_conversation_background_you"
-        android:gravity="center_vertical"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        tools:text="Тут сообщение" />
+        android:orientation="vertical"
+        android:paddingBottom="7dp">
 
-    <TextView
-        android:id="@+id/tv_conversation_you_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:paddingRight="5dp"
-        android:paddingTop="3dp"
-        android:textColor="#616161"
-        android:textSize="10sp"
-        tools:text="16-47" />
-</LinearLayout>
+        <TextView
+            android:id="@+id/tv_conversation_you"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:gravity="center_vertical"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            tools:text="Тут text" />
+
+        <TextView
+            android:id="@+id/tv_conversation_you_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:paddingTop="3dp"
+            android:textColor="#efefef"
+            android:textSize="10sp"
+            tools:text="16-47" />
+    </LinearLayout>
+</RelativeLayout>

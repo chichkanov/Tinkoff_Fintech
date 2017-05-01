@@ -10,15 +10,13 @@
         android:id="@+id/send_message_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        />
+        android:layout_alignParentBottom="true" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_conversation"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/send_message_field"
-        android:background="#EFEFEF"
         android:scrollbars="vertical" />
 
 

@@ -28,6 +28,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.ConversationActivity"
+            android:theme="@style/AppTheme.Conversation"
             android:windowSoftInputMode="stateHidden|adjustResize" />
     </application>
 
