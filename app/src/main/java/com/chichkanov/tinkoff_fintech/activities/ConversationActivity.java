@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -211,6 +212,7 @@ public class ConversationActivity extends AppCompatActivity implements LoaderMan
                 int textIndex = cursor.getColumnIndex(DbContract.MessageEntry.COLUMN_TEXT);
                 int timeIndex = cursor.getColumnIndex(DbContract.MessageEntry.COLUMN_TIMESTAMP);
                 int dialogIndex = cursor.getColumnIndex(DbContract.MessageEntry.COLUMN_DIALOG_ID);
+                int authorIndex = cursor.getColumnIndex(DbContract.MessageEntry.COLUMN_AUTHOR_ID);
 
                 String text = cursor.getString(textIndex);
 
@@ -218,8 +220,13 @@ public class ConversationActivity extends AppCompatActivity implements LoaderMan
                 String time = dateFormat.format(new Date(cursor.getString(timeIndex)));
 
                 String dialog = cursor.getString(dialogIndex);
+                int author = cursor.getInt(authorIndex);
 
-                if (dialog.equals(userName)) dialogItems.add(new ConversationItem(text, time, 0));
+                if (dialog.equals(userName)) {
+                    Log.i("AUTHOR", text + " " + author);
+                    if (author == 0) dialogItems.add(new ConversationItem(text, time, MESSAGE_YOU));
+                    else dialogItems.add(new ConversationItem(text, time, MESSAGE_MATE));
+                }
             }
             cursor.close();
             return dialogItems;
