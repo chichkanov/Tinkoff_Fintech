@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.chichkanov.tinkoff_fintech.R;
+import com.chichkanov.tinkoff_fintech.fragments.LoadingDialogFragment;
 import com.chichkanov.tinkoff_fintech.models.DialogsItem;
 import com.chichkanov.tinkoff_fintech.presenters.AddDialogPresenter;
 import com.chichkanov.tinkoff_fintech.views.AddDialogView;
@@ -54,7 +55,7 @@ public class AddDialogActivity extends MvpActivity<AddDialogView, AddDialogPrese
     @Override
     public void showLoading() {
         // Вынести загрузку в отдельынй файл
-        new LoginActivity.LoadingDialogFragment().show(getSupportFragmentManager(), LoginActivity.LoadingDialogFragment.TAG);
+        new LoadingDialogFragment().show(getSupportFragmentManager(), LoadingDialogFragment.TAG);
     }
 
     @Override

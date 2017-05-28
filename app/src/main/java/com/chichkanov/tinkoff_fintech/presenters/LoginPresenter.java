@@ -33,7 +33,7 @@ public class LoginPresenter extends MvpBasePresenter<LoginView> {
 
     private void onAuthResult(Boolean authResult) {
         if (authResult) {
-            getView().goToNavigationScreen();
+            getView().goToNavigationScreen("ds");
         } else {
             getView().showUnSuccessAuth();
         }

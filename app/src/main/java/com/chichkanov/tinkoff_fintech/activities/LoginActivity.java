@@ -18,19 +18,42 @@ import android.widget.Toast;
 
 import com.chichkanov.tinkoff_fintech.PrefManager;
 import com.chichkanov.tinkoff_fintech.R;
+import com.chichkanov.tinkoff_fintech.fragments.ErrorDialogFragment;
+import com.chichkanov.tinkoff_fintech.fragments.LoadingDialogFragment;
 import com.chichkanov.tinkoff_fintech.presenters.LoginPresenter;
 import com.chichkanov.tinkoff_fintech.views.LoginView;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.hannesdorfmann.mosby3.mvp.MvpActivity;
 
-public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implements LoginView {
+public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implements LoginView, GoogleApiClient.OnConnectionFailedListener {
+
+    private static final int RC_SIGN_IN = 1;
 
     private EditText login;
     private EditText password;
     private Button button;
 
+    private GoogleSignInOptions signInOptions;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private GoogleApiClient client;
+    private SignInButton signInButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if (PrefManager.getInstance().getLogin() != null) goToNavigationScreen();
+        if (PrefManager.getInstance().getLogin() != null) goToNavigationScreen(PrefManager.getInstance().getLogin());
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
@@ -43,7 +66,7 @@ public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implem
             @Override
             public void onClick(View view) {
                 if (login.length() > 0 && password.length() > 0) {
-                    new LoginActivity.LoadingDialogFragment().show(getSupportFragmentManager(), LoadingDialogFragment.TAG);
+                    new LoadingDialogFragment().show(getSupportFragmentManager(), LoadingDialogFragment.TAG);
                     presenter.onLoginButtonClick(login.getText().toString(), password.getText().toString());
 
                 } else {
@@ -51,6 +74,63 @@ public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implem
                 }
             }
         });
+
+        signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        client = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, signInOptions)
+                .build();
+
+        signInButton = (SignInButton) findViewById(R.id.sign_in_button);
+        signInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signIn();
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_SIGN_IN) {
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            handleSignInResult(result);
+        }
+    }
+
+    private void signIn() {
+        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(client);
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    private void handleSignInResult(GoogleSignInResult result) {
+        if (result.isSuccess()) {
+            GoogleSignInAccount acct = result.getSignInAccount();
+            firebaseAuth(acct);
+        }
+    }
+
+    private void firebaseAuth(GoogleSignInAccount acct) {
+        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        AuthResult result = task.getResult();
+                        FirebaseUser user = result.getUser();
+                        if (user != null) {
+                            PrefManager.getInstance().saveLogin(user.getDisplayName());
+                            goToNavigationScreen(user.getDisplayName());
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Unauthorized", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
     @NonNull
@@ -61,48 +141,20 @@ public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implem
 
 
     @Override
-    public void goToNavigationScreen() {
+    public void goToNavigationScreen(String name) {
         Intent intent = new Intent(this, NavigationActivity.class);
-        intent.putExtra("login", PrefManager.getInstance().getLogin());
+        intent.putExtra("login", name);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 
     @Override
     public void showUnSuccessAuth() {
-        new LoginActivity.ErrorDialogFragment().show(getSupportFragmentManager(), null);
+        new ErrorDialogFragment().show(getSupportFragmentManager(), null);
     }
 
-    public static class ErrorDialogFragment extends DialogFragment {
-        @Nullable
-        @Override
-        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-            return inflater.inflate(R.layout.dialog_fragment_error, null);
-        }
-
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            Dialog dialog = super.onCreateDialog(savedInstanceState);
-            dialog.setTitle("Ошибка авторизации!");
-            return dialog;
-        }
-    }
-
-    public static class LoadingDialogFragment extends DialogFragment {
-
-        public static final String TAG = "LoadingDialogFragment";
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-            return inflater.inflate(R.layout.dialog_fragment_loading, null);
-        }
-
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            Dialog dialog = super.onCreateDialog(savedInstanceState);
-            dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-            setCancelable(false);
-            return dialog;
-        }
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        // empty
     }
 }

@@ -6,6 +6,10 @@ public class DialogsItem {
     private String desc;
     private String date;
 
+    public DialogsItem() {
+        //for firebase
+    }
+
     public DialogsItem(String title, String desc, String date) {
         this.title = title;
         this.desc = desc;

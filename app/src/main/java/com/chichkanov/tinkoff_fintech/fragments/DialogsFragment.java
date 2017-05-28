@@ -124,8 +124,7 @@ public class DialogsFragment extends MvpFragment<DialogsView, DialogsPresenter> 
 
     @Override
     public void showLoading() {
-        // Вынести загрузку в отдельынй файл
-        new LoginActivity.LoadingDialogFragment().show(getFragmentManager(), LoginActivity.LoadingDialogFragment.TAG);
+        new LoadingDialogFragment().show(getFragmentManager(), LoadingDialogFragment.TAG);
     }
 
     @Override
