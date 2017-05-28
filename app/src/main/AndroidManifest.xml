@@ -30,6 +30,8 @@
             android:name=".activities.ConversationActivity"
             android:theme="@style/AppTheme.Conversation"
             android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activities.AddDialogActivity"/>
     </application>
 
 </manifest>

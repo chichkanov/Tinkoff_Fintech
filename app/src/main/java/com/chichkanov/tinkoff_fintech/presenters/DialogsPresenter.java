@@ -11,7 +11,7 @@ public class DialogsPresenter extends MvpBasePresenter<DialogsView> {
     }
 
     public void onAddDialogButtonClick() {
-        if(isViewAttached()){
+        if (isViewAttached()) {
             getView().goToAddDialogScreen();
         }
     }

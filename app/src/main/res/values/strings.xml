@@ -13,4 +13,6 @@
     <string name="btn_send_message_desc">send message image button</string>
     <string name="login_error">Неверный логин или пароль</string>
     <string name="loading">Загрузка...</string>
+    <string name="add_dialog_btn">Добавить</string>
+    <string name="add_dialog_login">Логин пользователя</string>
 </resources>

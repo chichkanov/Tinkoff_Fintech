@@ -20,7 +20,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.chichkanov.tinkoff_fintech.App;
+import com.chichkanov.tinkoff_fintech.activities.AddDialogActivity;
 import com.chichkanov.tinkoff_fintech.activities.ConversationActivity;
+import com.chichkanov.tinkoff_fintech.activities.LoginActivity;
 import com.chichkanov.tinkoff_fintech.models.DialogsItem;
 import com.chichkanov.tinkoff_fintech.OnItemClickListener;
 import com.chichkanov.tinkoff_fintech.R;
@@ -35,7 +37,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class DialogsFragment extends MvpFragment<DialogsView, DialogsPresenter> implements DialogsView{
+public class DialogsFragment extends MvpFragment<DialogsView, DialogsPresenter> implements DialogsView {
 
     private static final int DIALOGS_LOADER_ID = 1;
 
@@ -74,7 +76,6 @@ public class DialogsFragment extends MvpFragment<DialogsView, DialogsPresenter> 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("Press","dsa");
                 presenter.onAddDialogButtonClick();
             }
         });
@@ -123,11 +124,24 @@ public class DialogsFragment extends MvpFragment<DialogsView, DialogsPresenter> 
 
     @Override
     public void showLoading() {
-
+        // Вынести загрузку в отдельынй файл
+        new LoginActivity.LoadingDialogFragment().show(getFragmentManager(), LoginActivity.LoadingDialogFragment.TAG);
     }
 
     @Override
     public void goToAddDialogScreen() {
-        new AddContactDialogFragment().show(getFragmentManager(), AddContactDialogFragment.TAG);
+        Intent intent = new Intent(getActivity(), AddDialogActivity.class);
+        startActivityForResult(intent, 1);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data == null) {
+            return;
+        }
+        String name = data.getStringExtra("name");
+        String date = data.getStringExtra("date");
+        adapter.addDialog(new DialogsItem(name, "", date));
+        adapter.notifyDataSetChanged();
     }
 }

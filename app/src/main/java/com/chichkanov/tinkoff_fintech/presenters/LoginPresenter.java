@@ -12,7 +12,7 @@ public class LoginPresenter extends MvpBasePresenter<LoginView> {
     @Override
     public void attachView(LoginView view) {
         super.attachView(view);
-        if(authResult != null){
+        if (authResult != null) {
             onAuthResult(authResult);
             authResult = null;
         }
@@ -32,10 +32,9 @@ public class LoginPresenter extends MvpBasePresenter<LoginView> {
     }
 
     private void onAuthResult(Boolean authResult) {
-        if(authResult){
+        if (authResult) {
             getView().goToNavigationScreen();
-        }
-        else{
+        } else {
             getView().showUnSuccessAuth();
         }
     }
