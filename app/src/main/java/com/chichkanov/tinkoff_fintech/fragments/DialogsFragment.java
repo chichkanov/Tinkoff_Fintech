@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -22,11 +21,13 @@ import android.view.ViewGroup;
 
 import com.chichkanov.tinkoff_fintech.App;
 import com.chichkanov.tinkoff_fintech.activities.ConversationActivity;
-import com.chichkanov.tinkoff_fintech.DbContract;
 import com.chichkanov.tinkoff_fintech.models.DialogsItem;
 import com.chichkanov.tinkoff_fintech.OnItemClickListener;
 import com.chichkanov.tinkoff_fintech.R;
 import com.chichkanov.tinkoff_fintech.adapters.DialogsAdapter;
+import com.chichkanov.tinkoff_fintech.presenters.DialogsPresenter;
+import com.chichkanov.tinkoff_fintech.views.DialogsView;
+import com.hannesdorfmann.mosby3.mvp.MvpFragment;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -34,14 +35,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class DialogsFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<DialogsItem>> {
+public class DialogsFragment extends MvpFragment<DialogsView, DialogsPresenter> implements DialogsView{
 
     private static final int DIALOGS_LOADER_ID = 1;
 
     private RecyclerView recyclerView;
     private DialogsAdapter adapter;
-    private DialogsLoader dialogsLoader;
-    private LoaderManager.LoaderCallbacks<List<DialogsItem>> callbacks;
     private List<DialogsItem> dataset;
 
     private static final String ARG_TITLE = "Диалоги";
@@ -55,6 +54,10 @@ public class DialogsFragment extends Fragment implements LoaderManager.LoaderCal
         return fragment;
     }
 
+    @Override
+    public DialogsPresenter createPresenter() {
+        return new DialogsPresenter();
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,20 +71,11 @@ public class DialogsFragment extends Fragment implements LoaderManager.LoaderCal
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dialogs, container, false);
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab_add_contact);
-        callbacks = this;
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final AddContactDialogFragment dialog = new AddContactDialogFragment();
-                dialog.setOnContentChanged(new AddContactDialogFragment.OnContentChanged() {
-                    @Override
-                    public void itemAdded() {
-                        if (dialogsLoader != null) {
-                            getActivity().getSupportLoaderManager().restartLoader(DIALOGS_LOADER_ID, null, callbacks);
-                        }
-                    }
-                });
-                dialog.show(getActivity().getSupportFragmentManager(), AddContactDialogFragment.TAG);
+                Log.i("Press","dsa");
+                presenter.onAddDialogButtonClick();
             }
         });
         initRecyclerView(view);
@@ -92,9 +86,6 @@ public class DialogsFragment extends Fragment implements LoaderManager.LoaderCal
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         getActivity().setTitle(title);
-
-        dialogsLoader = new DialogsLoader(getContext());
-        getActivity().getSupportLoaderManager().initLoader(DIALOGS_LOADER_ID, null, this);
     }
 
     private void initRecyclerView(View view) {
@@ -126,122 +117,17 @@ public class DialogsFragment extends Fragment implements LoaderManager.LoaderCal
     }
 
     @Override
-    public Loader<List<DialogsItem>> onCreateLoader(int id, Bundle args) {
-        return new DialogsLoader(getContext());
+    public void openDialog(String userId) {
+
     }
 
     @Override
-    public void onLoadFinished(Loader<List<DialogsItem>> loader, List<DialogsItem> data) {
-        Log.i("LoaderFinished", "HEKSDA");
-        adapter.setItems(data);
-        dataset = data;
+    public void showLoading() {
+
     }
 
     @Override
-    public void onLoaderReset(Loader<List<DialogsItem>> loader) {
-        // Do nothing
-    }
-
-
-    public static class DialogsLoader extends AsyncTaskLoader<List<DialogsItem>> {
-
-        private List<DialogsItem> data;
-
-        public DialogsLoader(Context context) {
-            super(context);
-        }
-
-        @Override
-        public List<DialogsItem> loadInBackground() {
-            Log.i("LoadInBackground", "Hds");
-            List<DialogsItem> data = getPreviousDialogItems();
-            Log.i("LoadInBackground", "DatasetSize: " + data.size());
-            return data;
-        }
-
-        @Override
-        public void deliverResult(List<DialogsItem> newData) {
-            if (isReset()) {
-                if (data != null) {
-                    onReleaseResources(data);
-                }
-            }
-
-            List<DialogsItem> oldData = data;
-            data = newData;
-
-            Log.i("DeliverResults", "DatasetSize: " + data.size());
-
-            if (isStarted()) {
-                Log.i("DeliverResults STARTED", "DatasetSize: " + data.size());
-                super.deliverResult(newData);
-            }
-
-            if (oldData != null) {
-                onReleaseResources(oldData);
-            }
-        }
-
-        @Override
-        protected void onStartLoading() {
-            super.onStartLoading();
-            forceLoad();
-        }
-
-        @Override
-        protected void onStopLoading() {
-            cancelLoad();
-        }
-
-        @Override
-        public void onCanceled(List<DialogsItem> data) {
-            super.onCanceled(data);
-            onReleaseResources(data);
-        }
-
-        @Override
-        protected void onReset() {
-            super.onReset();
-            onStopLoading();
-            if (data != null) {
-                onReleaseResources(data);
-                data = null;
-            }
-        }
-
-        private void onReleaseResources(List<DialogsItem> data) {
-
-        }
-
-        @NonNull
-        private ArrayList<DialogsItem> getPreviousDialogItems() {
-            SQLiteDatabase readableDatabase = App.getDbhelper().getReadableDatabase();
-            Cursor cursor = readableDatabase.query(DbContract.DialogEntry.TABLE_NAME,
-                    new String[]{
-                            DbContract.DialogEntry.COLUMN_TITLE,
-                            DbContract.DialogEntry.COLUMN_DESCRIPTION,
-                            DbContract.DialogEntry.COLUMN_DESCRIPTION_DATE
-                    },
-                    null,
-                    null,
-                    null,
-                    null,
-                    null);
-            ArrayList<DialogsItem> dialogItems = new ArrayList<>();
-            while (cursor.moveToNext()) {
-                int titleIndex = cursor.getColumnIndex(DbContract.DialogEntry.COLUMN_TITLE);
-                int descriptionIndex = cursor.getColumnIndex(DbContract.DialogEntry.COLUMN_DESCRIPTION);
-                int descriptionDateIndex = cursor.getColumnIndex(DbContract.DialogEntry.COLUMN_DESCRIPTION_DATE);
-                DateFormat dateFormat = new SimpleDateFormat("HH:mm");
-
-                String title = cursor.getString(titleIndex);
-                String description = cursor.getString(descriptionIndex) != null ? cursor.getString(descriptionIndex) : "История сообщений пуста";
-                String descriptionDate = cursor.getString(descriptionDateIndex) != null ? dateFormat.format(new Date(cursor.getString(descriptionDateIndex))) : "";
-
-                dialogItems.add(new DialogsItem(title, description, descriptionDate));
-            }
-            cursor.close();
-            return dialogItems;
-        }
+    public void goToAddDialogScreen() {
+        new AddContactDialogFragment().show(getFragmentManager(), AddContactDialogFragment.TAG);
     }
 }

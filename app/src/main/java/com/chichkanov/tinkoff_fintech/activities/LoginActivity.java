@@ -3,6 +3,7 @@ package com.chichkanov.tinkoff_fintech.activities;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
@@ -15,21 +16,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.chichkanov.tinkoff_fintech.LoginTask;
 import com.chichkanov.tinkoff_fintech.PrefManager;
 import com.chichkanov.tinkoff_fintech.R;
-import com.chichkanov.tinkoff_fintech.fragments.LoginFragment;
+import com.chichkanov.tinkoff_fintech.presenters.LoginPresenter;
+import com.chichkanov.tinkoff_fintech.views.LoginView;
+import com.hannesdorfmann.mosby3.mvp.MvpActivity;
 
-public class LoginActivity extends AppCompatActivity implements LoginFragment.LoginListener {
+public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implements LoginView {
 
     private EditText login;
     private EditText password;
     private Button button;
-    private LoginFragment loginFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if (PrefManager.getInstance().getLogin() != null) startNextScreen();
+        if (PrefManager.getInstance().getLogin() != null) goToNavigationScreen();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
@@ -43,30 +44,24 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.Lo
             public void onClick(View view) {
                 if (login.length() > 0 && password.length() > 0) {
                     new LoginActivity.LoadingDialogFragment().show(getSupportFragmentManager(), LoadingDialogFragment.TAG);
-                    new LoginTask(loginFragment).execute(new String[]{login.getText().toString()});
+                    presenter.onLoginButtonClick(login.getText().toString(), password.getText().toString());
+
                 } else {
                     Toast.makeText(getApplicationContext(), "Введите правильные данные!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
-        if (savedInstanceState != null) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            loginFragment = (LoginFragment) fragmentManager.findFragmentByTag(LoginFragment.TAG);
-            if (loginFragment != null) {
-
-            } else {
-                loginFragment = new LoginFragment();
-                fragmentManager.beginTransaction().add(loginFragment, LoginFragment.TAG).commit();
-            }
-        } else {
-            loginFragment = new LoginFragment();
-            getSupportFragmentManager().beginTransaction().add(loginFragment, LoginFragment.TAG).commit();
-        }
-
     }
 
-    private void startNextScreen() {
+    @NonNull
+    @Override
+    public LoginPresenter createPresenter() {
+        return new LoginPresenter();
+    }
+
+
+    @Override
+    public void goToNavigationScreen() {
         Intent intent = new Intent(this, NavigationActivity.class);
         intent.putExtra("login", PrefManager.getInstance().getLogin());
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -74,13 +69,8 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.Lo
     }
 
     @Override
-    public void onResult(Boolean success) {
-        ((LoadingDialogFragment) getSupportFragmentManager().findFragmentByTag(LoadingDialogFragment.TAG)).dismissAllowingStateLoss();
-        if (success) {
-            startNextScreen();
-        } else {
-            new LoginActivity.ErrorDialogFragment().show(getSupportFragmentManager(), null);
-        }
+    public void showUnSuccessAuth() {
+        new LoginActivity.ErrorDialogFragment().show(getSupportFragmentManager(), null);
     }
 
     public static class ErrorDialogFragment extends DialogFragment {

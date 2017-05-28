@@ -13,7 +13,6 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.chichkanov.tinkoff_fintech.App;
-import com.chichkanov.tinkoff_fintech.DbContract;
 import com.chichkanov.tinkoff_fintech.R;
 import com.chichkanov.tinkoff_fintech.models.DialogsItem;
 
@@ -38,23 +37,7 @@ public class AddContactDialogFragment extends DialogFragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (et.getText().toString().trim().length() > 0) {
-                    // TODO check if element already in db
-                    SQLiteDatabase writableDatabase = App.getDbhelper().getWritableDatabase();
-                    DialogsItem dialogItem = new DialogsItem(et.getText().toString().trim(), null, null);
-                    ContentValues contentValues = new ContentValues();
-                    contentValues.put(DbContract.DialogEntry.COLUMN_TITLE, dialogItem.getTitle());
-                    contentValues.put(DbContract.DialogEntry.COLUMN_DESCRIPTION, dialogItem.getDesc());
-                    contentValues.put(DbContract.DialogEntry.COLUMN_TIMESTAMP, new Date().getTime());
-                    writableDatabase.insert(DbContract.DialogEntry.TABLE_NAME, null, contentValues);
-
-                    if (onContentChanged != null) {
-                        onContentChanged.itemAdded();
-                    }
-                    dismissAllowingStateLoss();
-                } else {
-                    Toast.makeText(getContext(), "Введите логин пользователя", Toast.LENGTH_SHORT).show();
-                }
+                //add
             }
         });
         return v;

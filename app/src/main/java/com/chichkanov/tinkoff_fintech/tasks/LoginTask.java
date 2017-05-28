@@ -1,17 +1,16 @@
-package com.chichkanov.tinkoff_fintech;
+package com.chichkanov.tinkoff_fintech.tasks;
 
 import android.os.AsyncTask;
 
-import com.chichkanov.tinkoff_fintech.fragments.LoginFragment;
-
-import java.lang.ref.WeakReference;
+import com.chichkanov.tinkoff_fintech.PrefManager;
+import com.chichkanov.tinkoff_fintech.presenters.LoginPresenter;
 
 public class LoginTask extends AsyncTask<String[], Void, Boolean> {
 
-    private WeakReference<LoginFragment> loginFragment;
+    private LoginPresenter loginPresenter;
 
-    public LoginTask(LoginFragment loginFragment) {
-        this.loginFragment = new WeakReference<>(loginFragment);
+    public LoginTask(LoginPresenter loginPresenter) {
+        this.loginPresenter = loginPresenter;
     }
 
     @Override
@@ -28,7 +27,6 @@ public class LoginTask extends AsyncTask<String[], Void, Boolean> {
 
     @Override
     protected void onPostExecute(Boolean success) {
-        LoginFragment loginFragment = this.loginFragment.get();
-        loginFragment.setSuccess(success);
+        loginPresenter.setAuthorizationResult(success);
     }
 }
