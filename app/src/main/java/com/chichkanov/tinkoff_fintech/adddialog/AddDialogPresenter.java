@@ -1,9 +1,6 @@
-package com.chichkanov.tinkoff_fintech.presenters;
+package com.chichkanov.tinkoff_fintech.adddialog;
 
-import com.chichkanov.tinkoff_fintech.models.DialogsItem;
-import com.chichkanov.tinkoff_fintech.tasks.AddDialogTask;
-import com.chichkanov.tinkoff_fintech.views.AddDialogView;
-import com.chichkanov.tinkoff_fintech.views.LoginView;
+import com.chichkanov.tinkoff_fintech.dialogs.DialogsItem;
 import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
 
 import java.text.DateFormat;

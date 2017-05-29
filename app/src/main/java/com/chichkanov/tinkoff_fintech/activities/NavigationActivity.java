@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import com.chichkanov.tinkoff_fintech.R;
 import com.chichkanov.tinkoff_fintech.fragments.AboutAppFragment;
-import com.chichkanov.tinkoff_fintech.fragments.DialogsFragment;
+import com.chichkanov.tinkoff_fintech.dialogs.DialogsFragment;
 import com.chichkanov.tinkoff_fintech.fragments.SettingsFragment;
 
 import agency.tango.android.avatarview.IImageLoader;

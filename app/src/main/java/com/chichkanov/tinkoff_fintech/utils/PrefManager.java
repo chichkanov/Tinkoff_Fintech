@@ -1,4 +1,4 @@
-package com.chichkanov.tinkoff_fintech;
+package com.chichkanov.tinkoff_fintech.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;

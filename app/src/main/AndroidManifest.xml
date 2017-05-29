@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".App"
+        android:name=".utils.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -21,17 +21,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.LoginActivity"
+            android:name=".login.LoginActivity"
             android:theme="@style/AppTheme.Login" />
         <activity
             android:name=".activities.NavigationActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.ConversationActivity"
+            android:name=".conversation.ConversationActivity"
             android:theme="@style/AppTheme.Conversation"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".activities.AddDialogActivity"/>
+            android:name=".adddialog.AddDialogActivity"/>
     </application>
 
 </manifest>

@@ -7,7 +7,7 @@
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
     </style>
 
-    <style name="AppTheme.Login" parent="Theme.AppCompat.NoActionBar">
+    <style name="AppTheme.Login" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
         <item name="colorControlNormal">@color/iron</item>
@@ -16,7 +16,6 @@
         <item name="android:textColorHint">@color/iron</item>
         <item name="colorButtonNormal">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/white</item>
-        <item name="android:windowBackground">@color/colorPrimary</item>
         <item name="android:dialogTheme">@style/CustomDialog</item>
     </style>
 

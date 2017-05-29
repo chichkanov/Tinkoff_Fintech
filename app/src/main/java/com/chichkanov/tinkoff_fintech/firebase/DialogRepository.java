@@ -1,6 +1,6 @@
 package com.chichkanov.tinkoff_fintech.firebase;
 
-import com.chichkanov.tinkoff_fintech.models.DialogsItem;
+import com.chichkanov.tinkoff_fintech.dialogs.DialogsItem;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;

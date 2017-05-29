@@ -1,7 +1,7 @@
-package com.chichkanov.tinkoff_fintech.presenters;
+package com.chichkanov.tinkoff_fintech.login;
 
-import com.chichkanov.tinkoff_fintech.tasks.LoginTask;
-import com.chichkanov.tinkoff_fintech.views.LoginView;
+import com.chichkanov.tinkoff_fintech.login.LoginTask;
+import com.chichkanov.tinkoff_fintech.login.LoginView;
 import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
 
 
@@ -24,6 +24,10 @@ public class LoginPresenter extends MvpBasePresenter<LoginView> {
         } else {
             this.authResult = authResult;
         }
+    }
+
+    public void authWithGoogle(){
+        // add later
     }
 
     public void onLoginButtonClick(String login, String password) {

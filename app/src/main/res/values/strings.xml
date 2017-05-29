@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">BestMessenger</string>
+    <string name="app_desc">Welcome to the official BestMessenger android app.</string>
+    <string name="app_desc2">A.Chichkanov</string>
     <string name="login">Логин</string>
     <string name="password">Пароль</string>
     <string name="enter">Войти</string>

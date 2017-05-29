@@ -1,27 +1,15 @@
-package com.chichkanov.tinkoff_fintech.activities;
+package com.chichkanov.tinkoff_fintech.login;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
-import com.chichkanov.tinkoff_fintech.PrefManager;
+import com.chichkanov.tinkoff_fintech.utils.PrefManager;
 import com.chichkanov.tinkoff_fintech.R;
+import com.chichkanov.tinkoff_fintech.activities.NavigationActivity;
 import com.chichkanov.tinkoff_fintech.fragments.ErrorDialogFragment;
-import com.chichkanov.tinkoff_fintech.fragments.LoadingDialogFragment;
-import com.chichkanov.tinkoff_fintech.presenters.LoginPresenter;
-import com.chichkanov.tinkoff_fintech.views.LoginView;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -42,10 +30,6 @@ public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implem
 
     private static final int RC_SIGN_IN = 1;
 
-    private EditText login;
-    private EditText password;
-    private Button button;
-
     private GoogleSignInOptions signInOptions;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private GoogleApiClient client;
@@ -58,23 +42,6 @@ public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implem
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        login = (EditText) findViewById(R.id.edit_text_login);
-        password = (EditText) findViewById(R.id.edit_text_password);
-        button = (Button) findViewById(R.id.btn_enter);
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (login.length() > 0 && password.length() > 0) {
-                    new LoadingDialogFragment().show(getSupportFragmentManager(), LoadingDialogFragment.TAG);
-                    presenter.onLoginButtonClick(login.getText().toString(), password.getText().toString());
-
-                } else {
-                    Toast.makeText(getApplicationContext(), "Введите правильные данные!", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
         signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -86,6 +53,7 @@ public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implem
                 .build();
 
         signInButton = (SignInButton) findViewById(R.id.sign_in_button);
+        signInButton.setColorScheme(SignInButton.COLOR_DARK);
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

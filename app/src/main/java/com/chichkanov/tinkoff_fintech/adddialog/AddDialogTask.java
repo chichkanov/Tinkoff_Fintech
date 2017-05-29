@@ -1,10 +1,9 @@
-package com.chichkanov.tinkoff_fintech.tasks;
+package com.chichkanov.tinkoff_fintech.adddialog;
 
 
 import android.os.AsyncTask;
 
-import com.chichkanov.tinkoff_fintech.models.DialogsItem;
-import com.chichkanov.tinkoff_fintech.presenters.AddDialogPresenter;
+import com.chichkanov.tinkoff_fintech.dialogs.DialogsItem;
 
 public class AddDialogTask extends AsyncTask<String[], Void, Boolean> {
 

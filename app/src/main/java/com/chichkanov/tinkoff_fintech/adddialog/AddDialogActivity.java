@@ -1,4 +1,4 @@
-package com.chichkanov.tinkoff_fintech.activities;
+package com.chichkanov.tinkoff_fintech.adddialog;
 
 
 import android.content.Intent;
@@ -9,9 +9,7 @@ import android.widget.EditText;
 
 import com.chichkanov.tinkoff_fintech.R;
 import com.chichkanov.tinkoff_fintech.fragments.LoadingDialogFragment;
-import com.chichkanov.tinkoff_fintech.models.DialogsItem;
-import com.chichkanov.tinkoff_fintech.presenters.AddDialogPresenter;
-import com.chichkanov.tinkoff_fintech.views.AddDialogView;
+import com.chichkanov.tinkoff_fintech.dialogs.DialogsItem;
 import com.hannesdorfmann.mosby3.mvp.MvpActivity;
 
 public class AddDialogActivity extends MvpActivity<AddDialogView, AddDialogPresenter> implements AddDialogView {

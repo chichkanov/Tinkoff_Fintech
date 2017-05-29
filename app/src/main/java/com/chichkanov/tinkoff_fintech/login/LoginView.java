@@ -1,4 +1,4 @@
-package com.chichkanov.tinkoff_fintech.views;
+package com.chichkanov.tinkoff_fintech.login;
 
 import com.hannesdorfmann.mosby3.mvp.MvpView;
 

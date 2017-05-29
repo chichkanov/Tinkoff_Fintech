@@ -1,4 +1,4 @@
-package com.chichkanov.tinkoff_fintech.views;
+package com.chichkanov.tinkoff_fintech.conversation;
 
 import android.content.Context;
 import android.text.Editable;

@@ -1,6 +1,6 @@
-package com.chichkanov.tinkoff_fintech.presenters;
+package com.chichkanov.tinkoff_fintech.dialogs;
 
-import com.chichkanov.tinkoff_fintech.views.DialogsView;
+import com.chichkanov.tinkoff_fintech.dialogs.DialogsView;
 import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
 
 public class DialogsPresenter extends MvpBasePresenter<DialogsView> {

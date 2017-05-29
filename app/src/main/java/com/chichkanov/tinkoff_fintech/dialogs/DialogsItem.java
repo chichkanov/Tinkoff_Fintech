@@ -1,4 +1,4 @@
-package com.chichkanov.tinkoff_fintech.models;
+package com.chichkanov.tinkoff_fintech.dialogs;
 
 public class DialogsItem {
 

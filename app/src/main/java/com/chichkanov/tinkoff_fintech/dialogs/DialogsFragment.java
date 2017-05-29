@@ -1,40 +1,22 @@
-package com.chichkanov.tinkoff_fintech.fragments;
+package com.chichkanov.tinkoff_fintech.dialogs;
 
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.AsyncTaskLoader;
-import android.support.v4.content.Loader;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.chichkanov.tinkoff_fintech.App;
-import com.chichkanov.tinkoff_fintech.activities.AddDialogActivity;
-import com.chichkanov.tinkoff_fintech.activities.ConversationActivity;
-import com.chichkanov.tinkoff_fintech.activities.LoginActivity;
-import com.chichkanov.tinkoff_fintech.models.DialogsItem;
-import com.chichkanov.tinkoff_fintech.OnItemClickListener;
+import com.chichkanov.tinkoff_fintech.adddialog.AddDialogActivity;
+import com.chichkanov.tinkoff_fintech.conversation.ConversationActivity;
 import com.chichkanov.tinkoff_fintech.R;
-import com.chichkanov.tinkoff_fintech.adapters.DialogsAdapter;
-import com.chichkanov.tinkoff_fintech.presenters.DialogsPresenter;
-import com.chichkanov.tinkoff_fintech.views.DialogsView;
+import com.chichkanov.tinkoff_fintech.fragments.LoadingDialogFragment;
 import com.hannesdorfmann.mosby3.mvp.MvpFragment;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class DialogsFragment extends MvpFragment<DialogsView, DialogsPresenter> implements DialogsView {

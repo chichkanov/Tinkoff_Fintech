@@ -1,9 +1,8 @@
-package com.chichkanov.tinkoff_fintech.tasks;
+package com.chichkanov.tinkoff_fintech.login;
 
 import android.os.AsyncTask;
 
-import com.chichkanov.tinkoff_fintech.PrefManager;
-import com.chichkanov.tinkoff_fintech.presenters.LoginPresenter;
+import com.chichkanov.tinkoff_fintech.utils.PrefManager;
 
 public class LoginTask extends AsyncTask<String[], Void, Boolean> {
 

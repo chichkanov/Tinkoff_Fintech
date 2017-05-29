@@ -1,19 +1,16 @@
 package com.chichkanov.tinkoff_fintech.activities;
 
 import android.content.Intent;
-import android.graphics.drawable.Animatable;
 import android.graphics.drawable.AnimatedVectorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.chichkanov.tinkoff_fintech.PrefManager;
+import com.chichkanov.tinkoff_fintech.utils.PrefManager;
 import com.chichkanov.tinkoff_fintech.R;
+import com.chichkanov.tinkoff_fintech.login.LoginActivity;
 
 public class SplashActivity extends AppCompatActivity {
 

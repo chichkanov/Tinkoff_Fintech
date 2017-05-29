@@ -1,4 +1,4 @@
-package com.chichkanov.tinkoff_fintech;
+package com.chichkanov.tinkoff_fintech.conversation;
 
 public class ConversationItem {
 
